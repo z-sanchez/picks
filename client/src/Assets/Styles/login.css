@@ -1,0 +1,180 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap");
+@font-face {
+  font-family: sportypo;
+  src: url("../Fonts/sportypo.ttf") format("truetype");
+}
+html {
+  overflow-x: hidden;
+  line-height: 1.6;
+  font-family: openSans, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  line-height: 1.2;
+}
+
+.secondaryText {
+  font-family: "Open Sans", serif;
+  color: #663831;
+}
+
+.accentText {
+  font-family: "Open Sans", serif;
+  color: #FFFFFF;
+}
+
+.boxShadow {
+  box-shadow: 0 5px 10px #663831;
+}
+
+.textShadow {
+  text-shadow: 0 5px 10px #663831;
+}
+
+.fullVH {
+  height: 100vh;
+  padding: 0;
+  overflow: hidden;
+}
+
+.wittenBackground {
+  background: url(../Images/wittenBackground.jpg) no-repeat;
+  background-size: 70% auto;
+  background-position-y: 5%;
+  background-position-x: left;
+}
+
+.background--primaryColor {
+  background-color: #8F553E;
+}
+
+.background--slanted {
+  position: relative;
+  width: 1000%;
+  height: 200%;
+  left: 30%;
+  transform: skew(-32deg);
+}
+
+#logoType {
+  color: white;
+  font-family: sportypo, sans-serif;
+  font-size: 4vw;
+}
+
+#loginForm {
+  transform: skew(32deg);
+  height: 40%;
+  width: 30%;
+  margin: 6% 0 0 18%;
+}
+#loginForm div h1 {
+  font-family: "Open Sans", serif;
+  color: #FFFFFF;
+  font-weight: 700;
+}
+#loginForm div p {
+  font-size: 0.8vw;
+}
+#loginForm div p:hover {
+  color: #502b27;
+  cursor: pointer;
+}
+#loginForm div label {
+  font-size: 1.2vw;
+}
+
+.loginForm__text {
+  width: 70%;
+  border-style: none;
+  background-color: #8F553E;
+  border-bottom: solid #663831 5px;
+  color: #FFFFFF;
+}
+
+.loginForm__text:focus {
+  outline: none;
+}
+
+#loginButton {
+  width: 70%;
+  font-family: "Open Sans", serif;
+  color: #FFFFFF;
+  border: none;
+  background-color: #663831;
+  font-size: 1.5vw;
+}
+
+@media only screen and (max-width: 1550px) {
+  .wittenBackground {
+    background-size: 1100px auto;
+  }
+}
+@media only screen and (max-width: 770px) {
+  body {
+    max-height: 900px;
+  }
+
+  .wittenBackground {
+    background-size: 100% auto;
+    background-position-y: 0;
+    background-position-x: left;
+  }
+
+  .background--slanted {
+    left: 0;
+    width: auto;
+    height: auto;
+    transform: none;
+  }
+
+  #logoType {
+    position: absolute;
+    bottom: 70vh;
+    font-size: 80px;
+  }
+
+  #loginForm {
+    transform: none;
+    width: 80%;
+    margin: 0 10% 0 10%;
+    padding: 10% 0 10% 0;
+  }
+  #loginForm div p {
+    font-size: 10px;
+  }
+  #loginForm div p:hover {
+    color: #502b27;
+    cursor: pointer;
+  }
+  #loginForm div label {
+    font-size: 15px;
+    width: 70%;
+  }
+
+  #loginButton {
+    font-size: 18px;
+  }
+}
+@media only screen and (max-height: 800px) and (max-width: 770px) {
+  .fullVH {
+    overflow-y: scroll;
+  }
+
+  .background--primaryColor {
+    height: auto;
+  }
+
+  #logoType {
+    position: relative;
+    bottom: 0;
+  }
+}
+
+/*# sourceMappingURL=login.css.map */

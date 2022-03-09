@@ -1,0 +1,64 @@
+//colors
+$primary: #8F553E
+$secondary: #663831
+$accent: #FFFFFF
+
+
+//fonts
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap')
+
+
+@font-face
+  font-family: sportypo
+  src: url('../Fonts/sportypo.ttf') format('truetype')
+
+
+//spacing
+
+
+
+//mixins
+@mixin fontStyle($color: $primary, $font: sportypo)
+  font-family: $font, serif
+  color: $color
+
+@mixin spaceKiller
+  padding: 0
+  margin: 0
+
+@mixin centerAligned($flow: column)
+  display: flex
+  flex-flow: $flow
+  align-items: center
+  justify-content: center
+  align-content: center
+
+
+//misc
+html
+  overflow-x: hidden
+  line-height: 1.6
+  font-family: openSans, sans-serif
+  -webkit-font-smoothing: antialiased
+  -moz-osx-font-smoothing: grayscale
+
+h1,
+h2,
+h3,
+h4,
+h5
+  line-height: 1.2
+
+.secondaryText
+  @include fontStyle($secondary, 'Open Sans')
+
+
+.accentText
+  @include fontStyle($accent, 'Open Sans')
+
+.boxShadow
+  box-shadow: 0 5px 10px $secondary
+
+.textShadow
+  text-shadow: 0 5px 10px $secondary

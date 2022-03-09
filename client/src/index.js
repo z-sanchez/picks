@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Login from "./Components/Login";
-import './Assets/Styles/App.css'
+import './Assets/Styles/boilerPlate.css'
 
 ReactDOM.render(
   <React.StrictMode>
