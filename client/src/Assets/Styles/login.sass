@@ -1,127 +1,99 @@
-@import boilerPlate
+@import "boilerPlate"
 
-
-.fullVH
+.loginWrapper
+  background-color: $accent
   height: 100vh
-  padding: 0
-  overflow: hidden
 
-.wittenBackground
-  background: url(../Images/wittenBackground.jpg) no-repeat
-  background-size: 70% auto
-  background-position-y: 5%
-  background-position-x: left
+.content--background
+  background-color: $accent
 
-
-.background--primaryColor
-  background-color: $primary
+.graphic__background, form
+  height: 65%
+  min-height: 330px
 
 
-.background--slanted
-  position: relative
-  width: 1000%
-  height: 200%
-  left: 30%
-  transform: skew(-32deg)
-
-#logoType
-  color: white
-  font-family: sportypo,sans-serif
-  font-size: 4vw
-
-#loginForm
-  transform: skew(32deg)
-  height: 40%
-  width: 30%
-  margin: 6% 0 0 18%
-  div
-    h1
-      @include fontStyle($accent, 'Open Sans')
-      font-weight: 700
-    p
-      font-size: .8vw
-    p:hover
-      color: #502b27
-      cursor: pointer
-    label
-      font-size: 1.2vw
-
-
-.loginForm__text
-  width: 70%
-  border-style: none
-  background-color: #8F553E
-  border-bottom: solid $secondary 5px
-  color: $accent
-
-.loginForm__text:focus
-  outline: none
-
-#loginButton
-  width: 70%
-  @include fontStyle($accent, 'Open Sans')
-  border: none
+.graphic__background
   background-color: $secondary
-  font-size: 1.5vw
+  border-radius: 1vh 0 0 1vh
+  box-shadow: 0 5px 8px rgba(147, 147, 147, 0.47)
+
+#footballGraphic
+  margin-top: 21%
+  align-self: center
+  max-width: 100%
+  width: 70%
+  height: auto
+
+form
+  background-color: #FFFFFF
+  border-radius: 0 1vh 1vh 0
+  box-shadow: 3px 5px 8px rgba(147, 147, 147, 0.47)
+  h1
+    font-size: $bigText
+  label
+    margin-bottom: 2%
+    color: rgb(108, 108, 108)
+    font-size: $smallText
+  input
+    width: 75%
+    height: 10%
+    border-style: none
+    border-radius: 1vh
+    box-shadow: 3px 3px 8px rgba(100, 100, 100, 0.47)
+    padding-left: 1vw
+    font-size: $smallText
+  input:focus
+    padding-left: 1vw
+    outline: none
+    font-size: $smallText
+
+
+.buttons
+  margin-top: auto
+  margin-bottom: 10vh
+  align-self: center
+  width: 12vw
+  border-style: none
+  border-radius: .5vh
+  box-shadow: 0 5px 8px rgba(147, 147, 147, 0.47)
+  background-color: $primary
+  color: #FFFFFF
+  font-size: $medText
+  padding: 1.5vh 0 1.5vh 0
 
 
 
 
+@media (max-width: 991.98px)
+
+  .graphic__background, form
+    border-radius: 0
+    min-height: 0
+
+  .graphic__background
+    height: 30%
+
+  form
+    height: 70%
+    h1
+      font-size: 10vw
+    label, input
+      font-size: 3vw
+      width: 90%
+    input
+      padding-left: 2vw
+    input:focus
+      font-size: 3vw
+      padding-left: 2vw
 
 
-@media only screen and (max-width: 1550px)
-  .wittenBackground
-    background-size: 1100px auto
+  #footballGraphic
+    margin-top: 0
+    width: 40%
+    margin-right: 10%
 
 
-@media only screen and (max-width: 770px)
-  body
-    max-height: 900px
-
-  .wittenBackground
-    background-size: 100% auto
-    background-position-y: 0
-    background-position-x: left
-
-
-  .background--slanted
-    left: 0
-    width: auto
-    height: auto
-    transform: none
-
-
-  #logoType
-    position: absolute
-    bottom: 70vh
-    font-size: 80px
-
-
-  #loginForm
-    transform: none
-    width: 80%
-    margin: 0 10% 0 10%
-    padding: 10% 0 10% 0
-    div
-      p
-        font-size: 10px
-      p:hover
-        color: #502b27
-        cursor: pointer
-      label
-        font-size: 15px
-        width: 70%
-
-  #loginButton
-    font-size: 18px
-
-@media only screen and (max-height: 800px) and (max-width: 770px)
-  .fullVH
-    overflow-y: scroll
-
-  .background--primaryColor
-    height: auto
-
-  #logoType
-    position: relative
-    bottom: 0
+  .buttons
+    margin: 0
+    width: 20vh
+    font-size: $bigText

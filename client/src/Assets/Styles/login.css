@@ -1,8 +1,4 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap");
-@font-face {
-  font-family: sportypo;
-  src: url("../Fonts/sportypo.ttf") format("truetype");
-}
 html {
   overflow-x: hidden;
   line-height: 1.6;
@@ -21,159 +17,136 @@ h5 {
 
 .secondaryText {
   font-family: "Open Sans", serif;
-  color: #663831;
+  color: #D0E1FF;
 }
 
 .accentText {
   font-family: "Open Sans", serif;
-  color: #FFFFFF;
+  color: #EAEEFF;
 }
 
 .boxShadow {
-  box-shadow: 0 5px 10px #663831;
+  box-shadow: 0 5px 10px rgba(100, 100, 100, 0.47);
 }
 
 .textShadow {
-  text-shadow: 0 5px 10px #663831;
+  text-shadow: 0 5px 10px #D0E1FF;
 }
 
-.fullVH {
+.textBar {
+  height: 0.5vh;
+  width: 25%;
+  background-color: #3B80FF;
+}
+
+.loginWrapper {
+  background-color: #EAEEFF;
   height: 100vh;
-  padding: 0;
-  overflow: hidden;
 }
 
-.wittenBackground {
-  background: url(../Images/wittenBackground.jpg) no-repeat;
-  background-size: 70% auto;
-  background-position-y: 5%;
-  background-position-x: left;
+.content--background {
+  background-color: #EAEEFF;
 }
 
-.background--primaryColor {
-  background-color: #8F553E;
+.graphic__background, form {
+  height: 65%;
+  min-height: 330px;
 }
 
-.background--slanted {
-  position: relative;
-  width: 1000%;
-  height: 200%;
-  left: 30%;
-  transform: skew(-32deg);
+.graphic__background {
+  background-color: #D0E1FF;
+  border-radius: 1vh 0 0 1vh;
+  box-shadow: 0 5px 8px rgba(147, 147, 147, 0.47);
 }
 
-#logoType {
-  color: white;
-  font-family: sportypo, sans-serif;
-  font-size: 4vw;
+#footballGraphic {
+  margin-top: 21%;
+  align-self: center;
+  max-width: 100%;
+  width: 70%;
+  height: auto;
 }
 
-#loginForm {
-  transform: skew(32deg);
-  height: 40%;
-  width: 30%;
-  margin: 6% 0 0 18%;
+form {
+  background-color: #FFFFFF;
+  border-radius: 0 1vh 1vh 0;
+  box-shadow: 3px 5px 8px rgba(147, 147, 147, 0.47);
 }
-#loginForm div h1 {
-  font-family: "Open Sans", serif;
-  color: #FFFFFF;
-  font-weight: 700;
+form h1 {
+  font-size: 3vw;
 }
-#loginForm div p {
+form label {
+  margin-bottom: 2%;
+  color: #6c6c6c;
   font-size: 0.8vw;
 }
-#loginForm div p:hover {
-  color: #502b27;
-  cursor: pointer;
-}
-#loginForm div label {
-  font-size: 1.2vw;
-}
-
-.loginForm__text {
-  width: 70%;
+form input {
+  width: 75%;
+  height: 10%;
   border-style: none;
-  background-color: #8F553E;
-  border-bottom: solid #663831 5px;
-  color: #FFFFFF;
+  border-radius: 1vh;
+  box-shadow: 3px 3px 8px rgba(100, 100, 100, 0.47);
+  padding-left: 1vw;
+  font-size: 0.8vw;
 }
-
-.loginForm__text:focus {
+form input:focus {
+  padding-left: 1vw;
   outline: none;
+  font-size: 0.8vw;
 }
 
-#loginButton {
-  width: 70%;
-  font-family: "Open Sans", serif;
+.buttons {
+  margin-top: auto;
+  margin-bottom: 10vh;
+  align-self: center;
+  width: 12vw;
+  border-style: none;
+  border-radius: 0.5vh;
+  box-shadow: 0 5px 8px rgba(147, 147, 147, 0.47);
+  background-color: #3B80FF;
   color: #FFFFFF;
-  border: none;
-  background-color: #663831;
-  font-size: 1.5vw;
+  font-size: 1.2vw;
+  padding: 1.5vh 0 1.5vh 0;
 }
 
-@media only screen and (max-width: 1550px) {
-  .wittenBackground {
-    background-size: 1100px auto;
-  }
-}
-@media only screen and (max-width: 770px) {
-  body {
-    max-height: 900px;
+@media (max-width: 991.98px) {
+  .graphic__background, form {
+    border-radius: 0;
+    min-height: 0;
   }
 
-  .wittenBackground {
-    background-size: 100% auto;
-    background-position-y: 0;
-    background-position-x: left;
+  .graphic__background {
+    height: 30%;
   }
 
-  .background--slanted {
-    left: 0;
-    width: auto;
-    height: auto;
-    transform: none;
+  form {
+    height: 70%;
+  }
+  form h1 {
+    font-size: 10vw;
+  }
+  form label, form input {
+    font-size: 3vw;
+    width: 90%;
+  }
+  form input {
+    padding-left: 2vw;
+  }
+  form input:focus {
+    font-size: 3vw;
+    padding-left: 2vw;
   }
 
-  #logoType {
-    position: absolute;
-    bottom: 70vh;
-    font-size: 80px;
+  #footballGraphic {
+    margin-top: 0;
+    width: 40%;
+    margin-right: 10%;
   }
 
-  #loginForm {
-    transform: none;
-    width: 80%;
-    margin: 0 10% 0 10%;
-    padding: 10% 0 10% 0;
-  }
-  #loginForm div p {
-    font-size: 10px;
-  }
-  #loginForm div p:hover {
-    color: #502b27;
-    cursor: pointer;
-  }
-  #loginForm div label {
-    font-size: 15px;
-    width: 70%;
-  }
-
-  #loginButton {
-    font-size: 18px;
-  }
-}
-@media only screen and (max-height: 800px) and (max-width: 770px) {
-  .fullVH {
-    overflow-y: scroll;
-  }
-
-  .background--primaryColor {
-    height: auto;
-  }
-
-  #logoType {
-    position: relative;
-    bottom: 0;
+  .buttons {
+    margin: 0;
+    width: 20vh;
+    font-size: 3vw;
   }
 }
 

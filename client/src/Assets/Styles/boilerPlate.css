@@ -1,8 +1,8 @@
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap");
 html {
   overflow-x: hidden;
   line-height: 1.6;
-  font-family: "Open Sans", sans-serif;
+  font-family: openSans, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -13,6 +13,24 @@ h3,
 h4,
 h5 {
   line-height: 1.2;
+}
+
+.secondaryText {
+  font-family: "Open Sans", serif;
+  color: #D0E1FF;
+}
+
+.accentText {
+  font-family: "Open Sans", serif;
+  color: #EAEEFF;
+}
+
+.boxShadow {
+  box-shadow: 0 5px 10px #D0E1FF;
+}
+
+.textShadow {
+  text-shadow: 0 5px 10px #D0E1FF;
 }
 
 /*# sourceMappingURL=boilerPlate.css.map */

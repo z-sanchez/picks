@@ -1,25 +1,22 @@
 //colors
-$primary: #8F553E
-$secondary: #663831
-$accent: #FFFFFF
+$primary: #3B80FF
+$secondary: #D0E1FF
+$accent: #EAEEFF
 
 
 //fonts
 
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap')
-
-
-@font-face
-  font-family: sportypo
-  src: url('../Fonts/sportypo.ttf') format('truetype')
-
+$bigText: 3vw
+$medText: 1.2vw
+$smallText: .8vw
 
 //spacing
 
 
 
 //mixins
-@mixin fontStyle($color: $primary, $font: sportypo)
+@mixin fontStyle($color: $primary, $font: 'Open Sans')
   font-family: $font, serif
   color: $color
 
@@ -53,12 +50,16 @@ h5
 .secondaryText
   @include fontStyle($secondary, 'Open Sans')
 
-
 .accentText
   @include fontStyle($accent, 'Open Sans')
 
 .boxShadow
-  box-shadow: 0 5px 10px $secondary
+  box-shadow: 0 5px 10px rgba(100, 100, 100, 0.47)
 
 .textShadow
   text-shadow: 0 5px 10px $secondary
+
+.textBar
+  height: .5vh
+  width: 25%
+  background-color: $primary
