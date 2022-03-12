@@ -1,9 +1,21 @@
-import React from "react";
+import React, {useState} from "react";
+import {prepLoginForm} from "../utilities/domManipulators";
+import {startFirebase, signInWithEmail, signOut} from "../firebase/firebase";
 import '../Assets/Styles/login.css';
 import graphic from '../Assets/Images/footballGraphic.png';
 
+startFirebase();
 
 function Login() {
+
+    const [loggingIn, setLoggingIn] = useState(true);
+
+
+
+    function prepForm() {
+        prepLoginForm(!loggingIn);
+        setLoggingIn(!loggingIn);
+    }
 
     return (
         <div className="loginWrapper">
@@ -11,10 +23,10 @@ function Login() {
                 <div className="row justify-content-center align-content-lg-center w-100 h-100 content--background">
                     <div className="graphic__background col-lg-3 d-flex flex-lg-column justify-content-center justify-content-lg-start">
                         <img src={graphic}  id="footballGraphic" alt="football player graphic"/>
-                        <button className="buttons">Sign Up</button>
+                        <button className="buttons" onClick={prepForm}>Sign Up</button>
                     </div>
                     <form className="col-lg-5 px-4 px-lg-5 d-flex flex-column justify-content-start">
-                        <h1>Login</h1>
+                        <h1 id="login__header">Login</h1>
                         <div className="textBar"/>
                         <label className="mt-5" htmlFor="username">
                             Username
@@ -24,7 +36,7 @@ function Login() {
                             Password
                         </label>
                         <input type="text"/>
-                        <button className="buttons mt-5 mt-lg-auto">Login</button>
+                        <button className="buttons mt-5 mt-lg-auto" onClick={(e) => {e.preventDefault(); signInWithEmail()}}>Login</button>
                     </form>
                 </div>
             </div>
