@@ -1,9 +1,8 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
 
-
 const firebase = initializeApp({
-    apiKey: process.env.REACT_APP_FIREBASE_KEY,
+    apiKey: "AIzaSyCabSeDzxW6Fwy-LMa1gd_ss_FJ66sESfY",
     authDomain: "picks-a4dce.firebaseapp.com",
     projectId: "picks-a4dce",
     storageBucket: "picks-a4dce.appspot.com",
