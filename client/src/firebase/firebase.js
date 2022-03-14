@@ -1,14 +1,14 @@
-import { initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import {initializeApp} from 'firebase/app';
+import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut} from "firebase/auth";
 
 const firebase = initializeApp({
-    apiKey: "AIzaSyCabSeDzxW6Fwy-LMa1gd_ss_FJ66sESfY",
-    authDomain: "picks-a4dce.firebaseapp.com",
-    projectId: "picks-a4dce",
-    storageBucket: "picks-a4dce.appspot.com",
-    messagingSenderId: "943991013399",
-    appId: "1:943991013399:web:c38353472c73f2fbef9c52",
-    measurementId: "G-Q282JJ1M2S"
+    apiKey: process.env.REACT_APP_FIREBASE_KEY,
+    authDomain: process.env.REACT_APP_FIREBASE_DOMAIN,
+    projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_MESSAGE_SENDER_ID,
+    appId: process.env.REACT_APP_APP_ID,
+    measurementId: process.env.REACT_APP_MEASUREMENT_ID
 });
 
 const auth = getAuth();
@@ -17,20 +17,13 @@ const auth = getAuth();
 //sign in and sign out functions
 
 export async function createUserWithEmail(email, password) {
-    createUserWithEmailAndPassword(auth, "demo@gmail.com", "demo123")
-        .then((userCredential) => {
-            console.log(userCredential + "signed in");
-        })
+    return createUserWithEmailAndPassword(auth, email, password)
 }
 
 
-//sign into firebase with demo credentials
+//sign in to firebase with demo credentials
 export async function signInWithEmail(email, password) {
-    signInWithEmailAndPassword(auth,"demo@gmail.com", "demo123" )
-        .then((userCredential) => {
-            console.log(userCredential.user + "Logged In");
-        })
-
+    return signInWithEmailAndPassword(auth, email, password)
 }
 
 export async function signOutApp() {
@@ -43,23 +36,3 @@ export async function signOutApp() {
     }
 }
 
-
-
-
-
-
-
-// useEffect(() => { //checks to see if user has been logged in
-//     const unsubscribe = seeAuthState().onAuthStateChanged((user) => {
-//         if (user) {
-//             setUser(user);
-//         } else {
-//             setUser(false);
-//         }
-//         if (initializing) {
-//             setInitializing(false);
-//         }
-//     });
-//
-//     return unsubscribe;
-// }, [initializing]);

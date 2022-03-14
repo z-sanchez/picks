@@ -67,13 +67,15 @@ h5 {
   height: auto;
 }
 
+#login__header {
+  font-size: 3vw;
+  width: 50%;
+}
+
 form {
   background-color: #FFFFFF;
   border-radius: 0 1vh 1vh 0;
   box-shadow: 3px 5px 8px rgba(147, 147, 147, 0.47);
-}
-form h1 {
-  font-size: 3vw;
 }
 form label {
   margin-bottom: 2%;
@@ -119,11 +121,12 @@ form input:focus {
     height: 30%;
   }
 
+  #login__header {
+    font-size: 10vw;
+  }
+
   form {
     height: 70%;
-  }
-  form h1 {
-    font-size: 10vw;
   }
   form label, form input {
     font-size: 3vw;
