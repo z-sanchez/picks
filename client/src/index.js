@@ -1,7 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./Components/App";
-import './Assets/Styles/boilerPlate.css'
+import './Assets/Styles/boilerPlate.css';
+import './Assets/Styles/login.css';
+import './Assets/Styles/picksInterface.css'
+import './Assets/Styles/sidebar.css';
+
 
 
 ReactDOM.render(

@@ -2,7 +2,6 @@ import React, {useState} from "react";
 import {useNavigate} from 'react-router-dom';
 import {prepForm, authStatus} from "../utilities/domManipulators";
 import {signInWithEmail, createUserWithEmail} from "../firebase/firebase";
-import '../Assets/Styles/login.css';
 import graphic from '../Assets/Images/footballGraphic.png';
 
 function Login() {
@@ -32,7 +31,6 @@ function Login() {
                 authStatus(false);
             }).catch((err) => {console.log(err); authStatus(true);});
         }
-
     }
 
     return (

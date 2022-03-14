@@ -1,0 +1,93 @@
+@import boilerPlate
+
+#appWrapper
+  height: 100vh
+  width: 100vw
+  background-color: $accent
+
+#picksWrapper
+  max-height: 100vh
+  overflow-y: scroll
+  .textBar
+    height: 0
+    padding-top: .3vh
+
+#weekHeader
+  h1
+    cursor: default
+
+
+.game
+  width: 30vw
+
+.game__info
+  width: 100%
+  margin: 2vh 0 2vh 0
+  p
+    margin-bottom: 0
+    text-align: center
+  h1
+    cursor: default
+    font-size: $smallText
+    @include fontStyle(#FFFFFF, "Open Sans")
+    margin: 0 0 0 1vw
+    padding: 1vh 2vw
+    background-color: $primary
+    border-radius: 1vh
+    box-shadow: 0 3px 5px rgba(129, 129, 129, 0.47)
+
+
+
+.game__infoTimeDate
+  font-size: $smallText
+
+.game__infoAT
+  margin: 0 0 0 0
+  font-size: $medText
+
+
+
+
+.game__away, .game__home
+  box-shadow: 0 3px 5px rgba(129, 129, 129, 0.47)
+  background-color: #FFFFFF
+  border-radius: 1vh
+  border: $primary 3px solid
+  h1
+    font-size: 1.2vw
+    text-align: center
+    margin: 0
+    padding-top: 2vh
+  p
+    margin: 0
+    font-size: 1vw
+    padding: 0 1vw 0 0
+  h1, p
+    cursor: default
+
+.game__away:hover, .game__home:hover
+  background-color: $primary
+  h1, p
+    color: #FFFFFF
+
+
+@media (max-width: 991.98px)
+  #picksWrapper
+    height: 90vh
+
+  .game
+    width: 60%
+
+  .game__info
+    h1
+      font-size: 2vw
+
+  .game__infoTimeDate, .game__infoAT
+    font-size: 3vw
+
+  .game__home, .game__away
+    h1
+      font-size: 3vw
+    p
+      font-size: 3vw
+

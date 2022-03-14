@@ -1,0 +1,58 @@
+@import boilerPlate
+
+#sidebar
+  background-color: $primary
+  border-radius: 0 2vh 2vh 0
+  height: 100vh
+
+
+
+.sidebar__icon--container
+  @include centerAligned(column)
+  margin: 5vh 0 5vh 0
+  width: 100%
+  opacity: 50%
+  p
+    color: white
+    text-align: center
+    @include fontStyle(#FFFFFF, 'Open Sans')
+  i
+    width: 50%
+    max-width: 10vh
+    @include centerAligned(column)
+
+.sidebar__icon--container:hover
+  opacity: 100%
+
+
+
+
+.sidebar__icon
+  width: 100%
+  height: auto
+
+
+
+
+
+@media (max-width: 991.98px)
+  #appWrapper
+    overflow-y: hidden
+
+  #sidebar
+    height: 10vh
+    border-radius: 2vh 2vh 0 0
+
+
+
+  .sidebar__icon--container
+    padding: 1vw 0
+    margin: 0 2vw 0 2vw
+    width: 20%
+    max-width: 100px
+    p
+      margin: 0
+      font-size: 3vw
+
+
+
