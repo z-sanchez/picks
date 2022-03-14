@@ -1,11 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Login from "./Components/Login";
+import App from "./Components/App";
 import './Assets/Styles/boilerPlate.css'
+
 
 ReactDOM.render(
   <React.StrictMode>
-    <Login/>
+    <App/>
   </React.StrictMode>,
   document.getElementById("root")
 );

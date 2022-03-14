@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import {useNavigate} from 'react-router-dom';
 import {prepForm, authStatus} from "../utilities/domManipulators";
 import {signInWithEmail, createUserWithEmail} from "../firebase/firebase";
 import '../Assets/Styles/login.css';
@@ -7,6 +8,7 @@ import graphic from '../Assets/Images/footballGraphic.png';
 function Login() {
 
     const [loggingIn, setLoggingIn] = useState(true);
+    const navigate = useNavigate();
 
 
     function changeForm() {
@@ -22,7 +24,7 @@ function Login() {
 
         if (loggingIn) {
             await signInWithEmail(email, password).then(() => {
-                console.log("Logged In!");
+                navigate('/app');
             }).catch((err) => authStatus(true));
         }
         else {
