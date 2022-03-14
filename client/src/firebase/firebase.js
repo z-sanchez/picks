@@ -1,35 +1,44 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-
-let firebase = null;
-let auth = null;
-
-export function startFirebase() {
-    firebase = initializeApp({
-        apiKey: "AIzaSyCabSeDzxW6Fwy-LMa1gd_ss_FJ66sESfY",
-        authDomain: "picks-a4dce.firebaseapp.com",
-        projectId: "picks-a4dce",
-        storageBucket: "picks-a4dce.appspot.com",
-        messagingSenderId: "943991013399",
-        appId: "1:943991013399:web:c38353472c73f2fbef9c52",
-        measurementId: "G-Q282JJ1M2S"
-    });
-   // const database = getFirestore(firebaseApp);
-    auth = getAuth();
-}
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
 
 
-//signing into firebase with demo credentials
-export async function signInWithEmail() {
+const firebase = initializeApp({
+    apiKey: process.env.REACT_APP_FIREBASE_KEY,
+    authDomain: "picks-a4dce.firebaseapp.com",
+    projectId: "picks-a4dce",
+    storageBucket: "picks-a4dce.appspot.com",
+    messagingSenderId: "943991013399",
+    appId: "1:943991013399:web:c38353472c73f2fbef9c52",
+    measurementId: "G-Q282JJ1M2S"
+});
+
+const auth = getAuth();
+
+
+//sign in and sign out functions
+
+export async function createUserWithEmail(email, password) {
     createUserWithEmailAndPassword(auth, "demo@gmail.com", "demo123")
         .then((userCredential) => {
-            console.log(userCredential);
+            console.log(userCredential + "signed in");
         })
 }
 
-export async function signOut() {
+
+//sign into firebase with demo credentials
+export async function signInWithEmail(email, password) {
+    signInWithEmailAndPassword(auth,"demo@gmail.com", "demo123" )
+        .then((userCredential) => {
+            console.log(userCredential.user + "Logged In");
+        })
+
+}
+
+export async function signOutApp() {
     try {
-        await firebase.auth().signOut();
+        await signOut(auth).then(() => {
+            console.log("signed out");
+        });
     } catch (error) {
         console.log(error.message);
     }
