@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {prepForm} from "../utilities/domManipulators";
+import {prepForm, authStatus} from "../utilities/domManipulators";
 import {signInWithEmail, createUserWithEmail} from "../firebase/firebase";
 import '../Assets/Styles/login.css';
 import graphic from '../Assets/Images/footballGraphic.png';
@@ -18,15 +18,17 @@ function Login() {
         let email = document.getElementById("email").value;
         let password = document.getElementById("password").value;
 
+        if (email == null || email === ""|| password == null || password === "") return;
+
         if (loggingIn) {
             await signInWithEmail(email, password).then(() => {
                 console.log("Logged In!");
-            }).catch((err) => console.log("Error: " + err));
+            }).catch((err) => authStatus(true));
         }
         else {
             await createUserWithEmail(email, password).then(() => {
-                console.log("signed up!");
-            }).catch((err) => console.log("Error: " + err));
+                authStatus(false);
+            }).catch((err) => {console.log(err); authStatus(true);});
         }
 
     }
@@ -40,7 +42,10 @@ function Login() {
                         <button className="buttons" onClick={() => {changeForm();}}>Sign Up</button>
                     </div>
                     <form className="col-lg-5 px-4 px-lg-5 d-flex flex-column justify-content-start">
-                        <h1 id="login__header">Login</h1>
+                        <div id="loginStatus__header" className="d-flex align-items-center justify-content-between">
+                            <h1 id="login__header">Login</h1>
+                            <p id="login__status" className="text-center px-2 py-1">Invalid email or password</p>
+                        </div>
                         <div className="textBar"/>
                         <label className="mt-5" htmlFor="username">
                             Email

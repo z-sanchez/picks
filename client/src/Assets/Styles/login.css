@@ -67,6 +67,16 @@ h5 {
   height: auto;
 }
 
+#loginStatus__header p {
+  display: none;
+  margin-top: 4%;
+  font-size: 0.8vw;
+  background-color: #F33F63;
+  border-radius: 1vh;
+  font-family: "Open Sans", serif;
+  color: #FFFFFF;
+}
+
 #login__header {
   font-size: 3vw;
   width: 50%;
@@ -119,6 +129,10 @@ form input:focus {
 
   .graphic__background {
     height: 30%;
+  }
+
+  #loginStatus__header p {
+    font-size: 3vw;
   }
 
   #login__header {
