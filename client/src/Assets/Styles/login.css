@@ -30,12 +30,12 @@ h5 {
 }
 
 .textShadow {
-  text-shadow: 0 5px 10px #D0E1FF;
+  text-shadow: 0 5px 10px rgba(100, 100, 100, 0.47);
 }
 
 .textBar {
-  height: 0.5vh;
-  width: 25%;
+  padding: 0.3vh;
+  width: 2vw;
   background-color: #3B80FF;
 }
 

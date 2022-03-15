@@ -1,0 +1,36 @@
+@import boilerPlate
+
+.groupContainer
+  width: 80%
+
+
+
+.groupBox
+  width: 100%
+  background-color: #FFFFFF
+  box-shadow: 0 3px 5px rgba(129, 129, 129, 0.47)
+  border-radius: 1vh
+
+
+.groupMember
+  p
+    @include fontStyle(black, 'Open Sans')
+    font-size: $medText
+    font-weight: bold
+    text-align: center
+    width: 10%
+    overflow-x: hidden
+  button
+    margin: 0
+
+
+@media (max-width: 991.98px)
+ .groupContainer
+  width: 95%
+
+ .groupMember
+  p
+    margin: 0 auto
+    font-size: 3vw
+  button
+    width: 30%

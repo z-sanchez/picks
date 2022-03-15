@@ -5,7 +5,8 @@ import './Assets/Styles/boilerPlate.css';
 import './Assets/Styles/login.css';
 import './Assets/Styles/picksInterface.css'
 import './Assets/Styles/sidebar.css';
-import './Assets/Styles/StatBox.css'
+import './Assets/Styles/statsInterface.css';
+import './Assets/Styles/groupInterface.css';
 
 
 

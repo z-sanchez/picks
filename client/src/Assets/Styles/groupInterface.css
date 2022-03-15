@@ -30,43 +30,51 @@ h5 {
 }
 
 .textShadow {
-  text-shadow: 0 5px 10px #D0E1FF;
+  text-shadow: 0 5px 10px rgba(100, 100, 100, 0.47);
 }
 
 .textBar {
-  height: 0.5vh;
-  width: 25%;
+  padding: 0.3vh;
+  width: 2vw;
   background-color: #3B80FF;
 }
 
-.statBox {
-  width: 60%;
+.groupContainer {
+  width: 80%;
+}
+
+.groupBox {
+  width: 100%;
   background-color: #FFFFFF;
-  margin-top: 6vh;
-  border-radius: 1vh;
   box-shadow: 0 3px 5px rgba(129, 129, 129, 0.47);
+  border-radius: 1vh;
 }
-.statBox h1 {
-  font-family: "Open Sans", serif;
-  color: black;
-  font-size: 3vw;
-}
-.statBox p {
+
+.groupMember p {
   font-family: "Open Sans", serif;
   color: black;
   font-size: 1.2vw;
+  font-weight: bold;
+  text-align: center;
+  width: 10%;
+  overflow-x: hidden;
+}
+.groupMember button {
+  margin: 0;
 }
 
 @media (max-width: 991.98px) {
-  .statBox {
-    width: 80%;
+  .groupContainer {
+    width: 95%;
   }
-  .statBox h1 {
-    font-size: 5vw;
-  }
-  .statBox p {
+
+  .groupMember p {
+    margin: 0 auto;
     font-size: 3vw;
+  }
+  .groupMember button {
+    width: 30%;
   }
 }
 
-/*# sourceMappingURL=StatBox.css.map */
+/*# sourceMappingURL=groupInterface.css.map */

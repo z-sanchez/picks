@@ -30,12 +30,12 @@ h5 {
 }
 
 .textShadow {
-  text-shadow: 0 5px 10px #D0E1FF;
+  text-shadow: 0 5px 10px rgba(100, 100, 100, 0.47);
 }
 
 .textBar {
-  height: 0.5vh;
-  width: 25%;
+  padding: 0.3vh;
+  width: 2vw;
   background-color: #3B80FF;
 }
 
@@ -50,12 +50,12 @@ h5 {
   overflow-y: scroll;
 }
 #contentWrapper .textBar {
-  height: 0;
-  padding-top: 0.3vh;
+  width: 15%;
 }
 
-#weekHeader h1 {
+#pageHeader h1 {
   cursor: default;
+  text-shadow: 0 3px 5px rgba(129, 129, 129, 0.47);
 }
 
 .game {
@@ -120,7 +120,7 @@ h5 {
 }
 
 @media (max-width: 991.98px) {
-  #picksWrapper {
+  #contentWrapper {
     height: 90vh;
   }
 

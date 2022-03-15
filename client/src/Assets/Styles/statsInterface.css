@@ -1,0 +1,75 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap");
+html {
+  overflow-x: hidden;
+  line-height: 1.6;
+  font-family: openSans, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  line-height: 1.2;
+}
+
+.secondaryText {
+  font-family: "Open Sans", serif;
+  color: #D0E1FF;
+}
+
+.accentText {
+  font-family: "Open Sans", serif;
+  color: #EAEEFF;
+}
+
+.boxShadow {
+  box-shadow: 0 5px 10px rgba(100, 100, 100, 0.47);
+}
+
+.textShadow {
+  text-shadow: 0 5px 10px rgba(100, 100, 100, 0.47);
+}
+
+.textBar {
+  padding: 0.3vh;
+  width: 2vw;
+  background-color: #3B80FF;
+}
+
+.statBox {
+  width: 60%;
+  background-color: #FFFFFF;
+  margin-top: 6vh;
+  border-radius: 1vh;
+  box-shadow: 0 3px 5px rgba(129, 129, 129, 0.47);
+}
+.statBox .textBar {
+  width: 15%;
+}
+.statBox h1 {
+  font-family: "Open Sans", serif;
+  color: black;
+  font-size: 3vw;
+}
+.statBox p {
+  font-family: "Open Sans", serif;
+  color: black;
+  font-size: 1.2vw;
+}
+
+@media (max-width: 991.98px) {
+  .statBox {
+    width: 80%;
+  }
+  .statBox h1 {
+    font-size: 5vw;
+  }
+  .statBox p {
+    font-size: 3vw;
+  }
+}
+
+/*# sourceMappingURL=statsInterface.css.map */

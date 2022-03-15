@@ -4,7 +4,7 @@ import React from "react";
 function StatsInterface() {
     return (
         <div className="col-lg-11 order-1 order-lg-2 d-flex flex-column align-items-center" id="contentWrapper">
-            <div id="weekHeader" className="align-self-start ms-5 mt-5">
+            <div id="pageHeader" className="align-self-start px-2 mt-5">
                 <h1>Stats</h1>
                 <div className="textBar"/>
             </div>
