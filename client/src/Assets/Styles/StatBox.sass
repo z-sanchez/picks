@@ -1,0 +1,28 @@
+@import boilerPlate
+
+
+.statBox
+  width: 60%
+  background-color: #FFFFFF
+  margin-top: 6vh
+  border-radius: 1vh
+  box-shadow: 0 3px 5px rgba(129, 129, 129, 0.47)
+
+  h1
+    @include fontStyle(black, 'Open Sans')
+    font-size: $bigText
+
+  p
+    @include fontStyle(black, 'Open Sans')
+    font-size: $medText
+
+
+@media (max-width: 991.98px)
+  .statBox
+    width: 80%
+
+    h1
+      font-size: 5vw
+
+    p
+      font-size: 3vw

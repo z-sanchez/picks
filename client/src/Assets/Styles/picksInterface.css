@@ -45,11 +45,11 @@ h5 {
   background-color: #EAEEFF;
 }
 
-#picksWrapper {
+#contentWrapper {
   max-height: 100vh;
   overflow-y: scroll;
 }
-#picksWrapper .textBar {
+#contentWrapper .textBar {
   height: 0;
   padding-top: 0.3vh;
 }

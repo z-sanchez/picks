@@ -23,7 +23,7 @@ function Login() {
 
         if (loggingIn) {
             await signInWithEmail(email, password).then(() => {
-                navigate('/app');
+                navigate('/app/picks');
             }).catch((err) => authStatus(true));
         }
         else {
