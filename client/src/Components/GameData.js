@@ -1,5 +1,5 @@
 import React from "react";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {getGameStats} from "../Api/sportsDataAPI";
 import {getTeamName, getTeamRecord, getGameLink, getGameTime} from "../Api/parsers";
 
@@ -9,13 +9,24 @@ const GameData = (props) => {
     const [data, setData] = useState(null);
 
 
-    async function getGameData() {
+    async function getGameData(abortSignal) {
         if (data !== null) return;
-        const gameData = await getGameStats(props.id);
-        setData(gameData);
+        await getGameStats(props.id, abortSignal).then((gameData) => {
+            setData(gameData);
+        }).catch((message) => {
+            console.log("fetch aborted")
+        });
     }
 
-    getGameData();
+
+    useEffect(() => {
+        let gameController = new AbortController();
+        getGameData(gameController.signal);
+        return function abort() {
+            gameController.abort();
+        }
+    });
+
 
     let display = null;
 

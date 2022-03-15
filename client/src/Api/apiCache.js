@@ -28,7 +28,6 @@ export function doesExist(year, week) {
     } else { //year doesn't exist in cache
         return false
     }
-
 }
 
 export function getData(year, week) {
