@@ -9,7 +9,6 @@ function AppInterface() {
                 <Outlet />
             </div>
         </div>
-
     );
 }
 

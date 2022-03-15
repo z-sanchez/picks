@@ -7,7 +7,7 @@ import uniqid from 'uniqid';
 function PicksInterface() {
 
     const [games, setGames] = useState([]);
-    const [week, setWeek] = useState(18);
+    const [week, setWeek] = useState(1);
     const [year, setYear] = useState(2021);
 
     async function fetchGames() {

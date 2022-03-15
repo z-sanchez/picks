@@ -1,4 +1,6 @@
 import {initializeApp} from 'firebase/app';
+import { doc, setDoc } from "firebase/firestore";
+import {getDatabase, set, ref} from "firebase/database";
 import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut} from "firebase/auth";
 
 const firebase = initializeApp({
@@ -17,13 +19,22 @@ const auth = getAuth();
 //sign in and sign out functions
 
 export async function createUserWithEmail(email, password) {
-    return createUserWithEmailAndPassword(auth, email, password)
+    const userDoc = {
+        email: email,
+        password: password,
+        picks: '[]',
+    }
+    const database = getDatabase();
+
+    return createUserWithEmailAndPassword(auth, email, password).then(() => {
+        set(ref(database, "users/" + "demo"), userDoc);
+    });
 }
 
 
 //sign in to firebase with demo credentials
 export async function signInWithEmail(email, password) {
-    return signInWithEmailAndPassword(auth, email, password)
+    return signInWithEmailAndPassword(auth, email, password);
 }
 
 export async function signOutApp() {
