@@ -41,5 +41,5 @@ export function getGameTime(data) {
 
 
 
-    return date.getMonth() + "/" + date.getDate() + "/" + date.getFullYear() + " " + hours + ":" + minutes + meridian;
+    return date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear() + " " + hours + ":" + minutes + meridian;
 }

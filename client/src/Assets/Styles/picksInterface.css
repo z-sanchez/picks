@@ -57,6 +57,9 @@ h5 {
   cursor: default;
   text-shadow: 0 3px 5px rgba(129, 129, 129, 0.47);
 }
+#pageHeader div button {
+  font-size: 0.8vw;
+}
 
 a {
   text-decoration: none;
@@ -126,6 +129,10 @@ a {
 @media (max-width: 991.98px) {
   #contentWrapper {
     height: 90vh;
+  }
+
+  #pageHeader div button {
+    font-size: 2vw;
   }
 
   .game {
