@@ -34,25 +34,9 @@ function PicksInterface() {
                 <div className="textBar"/>
             </div>
 
+            {renderGames()}
 
-            <div className="game my-5 d-flex flex-column">
-                <div className="game__away my-3 d-flex flex-column align-items-center justify-content-center">
-                    <h1>Dallas Cowboys</h1>
-                    <p className="align-self-end">2-1</p>
-                </div>
-                <div
-                    className="game__info d-flex flex-row align-self-center justify-content-between align-items-center">
-                    <h1>More</h1>
-                    <p className="game__infoAT">@</p>
-                    <p className="game__infoTimeDate">2/12/2022 8:00pm</p>
-                </div>
-
-                <div className="game__home my-3 d-flex flex-column align-items-center justify-content-center">
-                    <h1>Seattle Seahawks</h1>
-                    <p className="align-self-end">2-1</p>
-                </div>
-            </div>
-            <div className="textBar my-1"/>
+            <button className="buttons mx-2 my-5 mx-lg-5">Submit Picks</button>
         </div>
     );
 }
