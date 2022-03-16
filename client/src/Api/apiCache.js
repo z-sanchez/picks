@@ -39,11 +39,6 @@ export function updateCache(year, week, data) {
 }
 
 
-
-
-
-
-
 //example data structure for
 // gameCache = [
 //  {
@@ -70,25 +65,18 @@ export function doesGameDataExist(year, week, gameID) {
     const findYear = (object) => object.year === year;
     const findWeek = (object) => object.week === week;
 
-
-    console.log(gameCache)
-    console.log(gameID);
-
     if (gameCache.filter(object => object.year === year).length > 0) { //if year exist in cache
         let yearArray = gameCache[gameCache.findIndex(findYear)].array; //get array
         if (yearArray.filter(object => object.week === week).length > 0) {
-            let weekGames = gameCache[gameCache.findIndex(findWeek)].games;
-            return weekGames.filter(object => object.gameID) === gameID;
+            let weekGames = yearArray[yearArray.findIndex(findWeek)].games;
+            return weekGames.filter(object => object.gameID === gameID).length > 0;
+        } else {
+            return false;
         }
-        else {
-            return false
-        }
-    }
-    else {
+    } else {
         return false;
     }
 }
-
 
 
 export function getGameDataFromCache(year, week, gameID) {
@@ -102,24 +90,25 @@ export function getGameDataFromCache(year, week, gameID) {
 }
 
 
-
-
-export function updateGameCache(year, week, gameID, data) {
+export async function updateGameCache(year, week, gameID, data) {
     const findYear = (object) => object.year === year;
     const findWeek = (object) => object.week === week;
 
-    if (gameCache.filter(object => object.year === year).length > 0) { //if year exist in cache
-        let yearArray = gameCache[gameCache.findIndex(findYear)].array; //get year array
-        if (yearArray.filter(object => object.week === week).length > 0) { //if week exist
-            let weekPicks = gameCache[gameCache.findIndex(findWeek)].games;
-            weekPicks.push({gameID: gameID, data: data});
+    function update() {
+        if (gameCache.filter(object => object.year === year).length > 0) { //if year exist in cache
+            let yearArray = gameCache[gameCache.findIndex(findYear)].array; //get year array
+            if (yearArray.filter(object => object.week === week).length > 0) { //if week exist
+                let weekGames = yearArray[yearArray.findIndex(findWeek)].games;
+                weekGames.push({gameID: gameID, data: data});
+            } else {
+                yearArray.push({week: week, games: [{gameID: gameID, data: data}]});
+            }
+        } else { //year doesn't exist in cache
+            gameCache.push({year: year, array: [{week: week, games: [{gameID: gameID, data: data}]}]});
         }
-        else {
-            yearArray.push({week: week, games: [{gameID: gameID, data: data}]});
-        }
-    } else { //year doesn't exist in cache
-        gameCache.push({year: year, array: [{week: week, games: [{gameID: gameID, data: data}]}]});
     }
+
+    await update();
 }
 
 

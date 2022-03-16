@@ -21,17 +21,17 @@ const GameData = (props) => {
     async function getGameData(abortSignal) {
         if (data !== null) return;
 
-    //    if (doesGameDataExist(props.year, props.week, props.id) === false) {
+        if (doesGameDataExist(props.year, props.week, props.id) === false) {
+            console.log('games retrieved from fetch');
             await getGameStats(props.id, abortSignal).then((gameData) => {
-    //            updateGameCache(props.year, props.week, props.id, gameData);
                 setData(gameData);
             }).catch((message) => {
                 console.log("fetch aborted in GameData");
             });
-        // } else {
-        //     setData(getGameDataFromCache(props.year, props.week, props.id));
-        //     console.log('games retrieved from cache');
-        // }
+        } else {
+            console.log('games retrieved from cache for week: ' + props.week);
+            setData(getGameDataFromCache(props.year, props.week, props.id));
+        }
     }
 
 
@@ -39,6 +39,7 @@ const GameData = (props) => {
         let gameController = new AbortController();
         getGameData(gameController.signal);
         return function abort() {
+            if (data !== null) updateGameCache(props.year, props.week, props.id, data);
             gameController.abort();
         }
     });
