@@ -19,15 +19,13 @@ const GameData = (props) => {
 
     async function getGameData(abortSignal) {
         if (data !== null) return;
-        if (doesUserPickExist(props.year, props.week, props.id === false)) {
+        // if (doesUserPickExist(props.year, props.week, props.id === false)) {}
             await getGameStats(props.id, abortSignal).then((gameData) => {
                 setData(gameData);
             }).catch((message) => {
                 console.log("fetch aborted")
             });
-        }
-        else if (data === null) { //if data hasn't been picked from cache already
-        }
+
 
 
         //issues:
@@ -35,7 +33,7 @@ const GameData = (props) => {
         //we should cache user picks
         //both should be kept separate because we shouldn't store game data in firestore
         //we shouldn't duplicate the same structure for game data as in userCache
-        //but adding gameData to userCache complicates push data back into firestore,
+        //but adding gameData to userCache complicates push data back into firestore and user changes,
         //because then we'd have to pick out each gameData before pushing. Wasting time
     }
 

@@ -2,7 +2,7 @@
 // cache = [
 //  {
 //      year: 2021,
-//      array: [{week: 4, data: data}],
+//      array: [{week: 4, data: [data]}],
 //  }
 // ];
 let cache = [];
@@ -36,6 +36,9 @@ export function updateCache(year, week, data) {
     } else { //year doesn't exist in cache
         cache.push({year: year, array: [{week: week, data: data}]});
     }
-
 }
 
+
+//doesGameDataExist
+//getGameData
+//updateGameDataCache

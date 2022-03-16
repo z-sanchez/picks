@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import UserContext from "../utilities/UserContext";
+import {onAuthStateChanged, getAuth} from "firebase/auth";
 import Login from "./Login";
-import {signOutApp} from "../firebase/firebase";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import PicksInterface from "./PicksInterface";
 import AppInterface from "./AppInterface";
@@ -11,6 +11,18 @@ import GroupsInterface from "./GroupsInterface";
 function App() {
 
     const [user, setUser] = useState(null);
+
+    useEffect(() => {
+
+        const unsubscribe = onAuthStateChanged(getAuth(), (user) => {
+            if (user) {
+                setUser(user);
+            }
+            else setUser(null);
+        });
+
+        return unsubscribe;
+    }, [user])
 
 
     function updateUser(name) {

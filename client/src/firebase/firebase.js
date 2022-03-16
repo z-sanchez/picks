@@ -1,6 +1,6 @@
 import {initializeApp} from 'firebase/app';
 import {doc, setDoc, getFirestore} from "firebase/firestore";
-import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut} from "firebase/auth";
+import {getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut} from "firebase/auth";
 
 const firebase = initializeApp({
     apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -47,4 +47,3 @@ export async function signOutApp() {
         console.log(error.message);
     }
 }
-

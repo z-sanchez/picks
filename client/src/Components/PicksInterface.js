@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useContext} from "react";
+import {signOutApp} from "../firebase/firebase";
 import GameData from "./GameData";
 import {findWeeksGames} from "../Api/sportsDataAPI";
 import {updateCache, doesExist, getData} from "../Api/apiCache";
@@ -62,7 +63,7 @@ function PicksInterface() {
             <div id="pageHeader"
                  className="align-self-start w-100 px-2 my-5 d-flex flex-column flex-lg-row justify-content-between">
                 <div className="d-flex flex-column">
-                    <h1>{year + " WEEK " + week}</h1>
+                    <h1 onClick={signOutApp}>{year + " WEEK " + week}</h1>
                     <div className="textBar"/>
                 </div>
                 <div className="d-flex mt-5 mt-lg-0 justify-content-center align-items-center align-self-lg-end">
