@@ -65,7 +65,6 @@ export function updateUserCache(year, week, gameID, pick) {
     } else { //year doesn't exist in cache
         userCache.push({year: year, array: [{week: week, picks: [{gameID: gameID, pick: pick}]}]});
     }
-
 }
 
 

@@ -3,6 +3,7 @@ import {useState, useEffect} from "react";
 import {getGameStats} from "../Api/sportsDataAPI";
 import {getTeamName, getTeamRecord, getGameLink, getGameTime} from "../Api/parsers";
 import {doesUserPickExist, getPickFromUserCache, updateUserCache} from "../firebase/userCache";
+import {doesGameDataExist, getGameDataFromCache, updateGameCache} from "../Api/apiCache";
 
 
 const GameData = (props) => {
@@ -19,22 +20,18 @@ const GameData = (props) => {
 
     async function getGameData(abortSignal) {
         if (data !== null) return;
-        // if (doesUserPickExist(props.year, props.week, props.id === false)) {}
+
+    //    if (doesGameDataExist(props.year, props.week, props.id) === false) {
             await getGameStats(props.id, abortSignal).then((gameData) => {
+    //            updateGameCache(props.year, props.week, props.id, gameData);
                 setData(gameData);
             }).catch((message) => {
-                console.log("fetch aborted")
+                console.log("fetch aborted in GameData");
             });
-
-
-
-        //issues:
-        //we should cache game data
-        //we should cache user picks
-        //both should be kept separate because we shouldn't store game data in firestore
-        //we shouldn't duplicate the same structure for game data as in userCache
-        //but adding gameData to userCache complicates push data back into firestore and user changes,
-        //because then we'd have to pick out each gameData before pushing. Wasting time
+        // } else {
+        //     setData(getGameDataFromCache(props.year, props.week, props.id));
+        //     console.log('games retrieved from cache');
+        // }
     }
 
 

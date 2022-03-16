@@ -1,4 +1,4 @@
-import React, {useState, useContext} from "react";
+import React, {useState, useContext, useEffect} from "react";
 import {useNavigate} from 'react-router-dom';
 import {prepForm, authStatus} from "../utilities/domManipulators";
 import {signInWithEmail, createUserWithEmail} from "../firebase/firebase";
@@ -12,6 +12,9 @@ function Login() {
     const navigate = useNavigate();
     const context = useContext(UserContext);
 
+    useEffect(() => {
+        if (context.user != null) navigate('/app/picks');
+    });
 
     function changeForm() {
         prepForm(!loggingIn);

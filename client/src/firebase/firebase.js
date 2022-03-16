@@ -1,6 +1,11 @@
 import {initializeApp} from 'firebase/app';
 import {doc, setDoc, getFirestore} from "firebase/firestore";
-import {getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut} from "firebase/auth";
+import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    signOut
+} from "firebase/auth";
 
 const firebase = initializeApp({
     apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -12,8 +17,6 @@ const firebase = initializeApp({
     measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
 });
 
-
-const auth = getAuth();
 
 
 //sign in and sign out functions
@@ -27,7 +30,7 @@ export async function createUserWithEmail(email, password) {
     const database = getFirestore(firebase);
     const usersRef = doc(database, 'users', email);
 
-    return createUserWithEmailAndPassword(auth, email, password).then(() => {
+    return createUserWithEmailAndPassword(getAuth(), email, password).then(() => {
         setDoc(usersRef, userDoc);
     });
 }
@@ -35,15 +38,17 @@ export async function createUserWithEmail(email, password) {
 
 //sign in to firebase with demo credentials
 export async function signInWithEmail(email, password) {
-    return signInWithEmailAndPassword(auth, email, password);
+    return signInWithEmailAndPassword(getAuth(), email, password);
 }
 
 export async function signOutApp() {
     try {
-        await signOut(auth).then(() => {
+        await signOut(getAuth()).then(() => {
             console.log("signed out");
         });
     } catch (error) {
         console.log(error.message);
     }
 }
+
+

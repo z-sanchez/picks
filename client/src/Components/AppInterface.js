@@ -11,8 +11,7 @@ function AppInterface() {
 
     useEffect(() => {
         if (context.user === null) navigate('/');
-    })
-
+    });
 
     if (context.user != null) { //don't show app unless logged in
         return (
@@ -24,7 +23,7 @@ function AppInterface() {
             </div>
         )
     }
-    
+
     return null;
 }
 

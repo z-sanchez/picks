@@ -25,7 +25,7 @@ function PicksInterface() {
                     setGames(gamesFound);
                 })
                 .catch((message) => {
-                    console.log("fetch aborted")
+                    console.log("fetch aborted in PicksInterface")
                 });
         } else if (games.length === 0) { //check if games haven't been picked from cache already
             setGames(getData(year, week));
