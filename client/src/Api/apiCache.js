@@ -7,17 +7,6 @@
 // ];
 let cache = [];
 
-export function updateCache(year, week, data) {
-    const findYear = (object) => object.year === year;
-
-    if (cache.filter(object => object.year === year).length > 0) { //if year exist in cache
-        let yearArray = cache[cache.findIndex(findYear)].array; //get year array
-        yearArray.push({week: week, data: data});
-    } else { //year doesn't exist in cache
-        cache.push({year: year, array: [{week: week, data: data}]});
-    }
-
-}
 
 export function doesExist(year, week) {
     const findYear = (object) => object.year === year;
@@ -35,5 +24,18 @@ export function getData(year, week) {
     const findWeek = (object) => object.week === week;
     let data = cache[cache.findIndex(findYear)].array;
     return data[data.findIndex(findWeek)].data;
+}
+
+
+export function updateCache(year, week, data) {
+    const findYear = (object) => object.year === year;
+
+    if (cache.filter(object => object.year === year).length > 0) { //if year exist in cache
+        let yearArray = cache[cache.findIndex(findYear)].array; //get year array
+        yearArray.push({week: week, data: data});
+    } else { //year doesn't exist in cache
+        cache.push({year: year, array: [{week: week, data: data}]});
+    }
+
 }
 

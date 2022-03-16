@@ -2,6 +2,7 @@ import React from "react";
 import {useState, useEffect} from "react";
 import {getGameStats} from "../Api/sportsDataAPI";
 import {getTeamName, getTeamRecord, getGameLink, getGameTime} from "../Api/parsers";
+import {doesUserPickExist, getPickFromUserCache, updateUserCache} from "../firebase/userCache";
 
 
 const GameData = (props) => {
@@ -18,11 +19,24 @@ const GameData = (props) => {
 
     async function getGameData(abortSignal) {
         if (data !== null) return;
-        await getGameStats(props.id, abortSignal).then((gameData) => {
-            setData(gameData);
-        }).catch((message) => {
-            console.log("fetch aborted")
-        });
+        if (doesUserPickExist(props.year, props.week, props.id === false)) {
+            await getGameStats(props.id, abortSignal).then((gameData) => {
+                setData(gameData);
+            }).catch((message) => {
+                console.log("fetch aborted")
+            });
+        }
+        else if (data === null) { //if data hasn't been picked from cache already
+        }
+
+
+        //issues:
+        //we should cache game data
+        //we should cache user picks
+        //both should be kept separate because we shouldn't store game data in firestore
+        //we shouldn't duplicate the same structure for game data as in userCache
+        //but adding gameData to userCache complicates push data back into firestore,
+        //because then we'd have to pick out each gameData before pushing. Wasting time
     }
 
 
@@ -40,16 +54,18 @@ const GameData = (props) => {
     if (data !== null) {
         let awayName = getTeamName(data, false), homeName = getTeamName(data, true),
             awayRecord = getTeamRecord(data, false), homeRecord = getTeamRecord(data, true),
-            gameTime = getGameTime(data), gameLink = getGameLink(data), awayClass = 'game__away', homeClass = 'game__home';
+            gameTime = getGameTime(data), gameLink = getGameLink(data), awayClass = 'game__away',
+            homeClass = 'game__home';
 
-        if (pickHome != null){
+        if (pickHome != null) {
             if (pickHome === true) homeClass = homeClass + " pick";
             else awayClass = awayClass + " pick";
         }
 
         display = (
             <div className="game my-5 d-flex flex-column">
-                <div className={awayClass + " my-3 d-flex flex-column align-items-center justify-content-center"} onClick={() => pickTeam(false)}>
+                <div className={awayClass + " my-3 d-flex flex-column align-items-center justify-content-center"}
+                     onClick={() => pickTeam(false)}>
                     <h1>{awayName} </h1>
                     <p className="align-self-end">{awayRecord}</p>
                 </div>
@@ -60,7 +76,8 @@ const GameData = (props) => {
                     <p className="game__infoTimeDate">{gameTime}</p>
                 </div>
 
-                <div className={homeClass + " my-3 d-flex flex-column align-items-center justify-content-center"} onClick={() => pickTeam(true)}>
+                <div className={homeClass + " my-3 d-flex flex-column align-items-center justify-content-center"}
+                     onClick={() => pickTeam(true)}>
                     <h1>{homeName}</h1>
                     <p className="align-self-end">{homeRecord}</p>
                 </div>

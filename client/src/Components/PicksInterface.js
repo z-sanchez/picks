@@ -26,9 +26,9 @@ function PicksInterface() {
                 .catch((message) => {
                     console.log("fetch aborted")
                 });
-        } else if (games.length === 0) {
+        } else if (games.length === 0) { //check if games haven't been picked from cache already
             setGames(getData(year, week));
-        } else if (getData(year, week)[0] !== games[0]) {
+        } else if (getData(year, week)[0] !== games[0]) { //if state holds cache value from different week
             setGames(getData(year, week));
         }
     }
@@ -51,7 +51,7 @@ function PicksInterface() {
     function renderGames() {
         if (games.length !== 0) {
             return games.map((game) => {
-                return <GameData id={game} key={uniqid()}/>
+                return <GameData id={game} week={week} year={year} key={uniqid()}/>
             });
         } else return null;
     }
