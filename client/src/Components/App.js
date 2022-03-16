@@ -1,4 +1,5 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
+import UserContext from "../utilities/UserContext";
 import Login from "./Login";
 import {signOutApp} from "../firebase/firebase";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
@@ -9,23 +10,32 @@ import GroupsInterface from "./GroupsInterface";
 
 function App() {
 
-    useEffect(() => {
-        return function signOut() {
-            signOutApp();
-        }
-    })
+    const [user, setUser] = useState(null);
+
+
+    function updateUser(name) {
+        setUser(name);
+    }
+
+    let contextData = {
+        user: user,
+        updateUser: updateUser,
+    }
+
 
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route path='/' element={<Login/>}/>
-                <Route path='/app' element={<AppInterface/>}>
-                    <Route path="picks" element={<PicksInterface/>}/>
-                    <Route path="stats" element={<StatsInterface/>}/>
-                    <Route path="groups" element={<GroupsInterface/>}/>
-                </Route>
-            </Routes>
-        </BrowserRouter>
+        <UserContext.Provider value={contextData}>
+            <BrowserRouter>
+                <Routes>
+                    <Route path='/' element={<Login/>}/>
+                    <Route path='/app' element={<AppInterface/>}>
+                        <Route path="picks" element={<PicksInterface/>}/>
+                        <Route path="stats" element={<StatsInterface/>}/>
+                        <Route path="groups" element={<GroupsInterface/>}/>
+                    </Route>
+                </Routes>
+            </BrowserRouter>
+        </UserContext.Provider>
     );
 }
 

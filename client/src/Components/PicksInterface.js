@@ -4,11 +4,15 @@ import {findWeeksGames} from "../Api/sportsDataAPI";
 import {updateCache, doesExist, getData} from "../Api/apiCache";
 import uniqid from 'uniqid';
 
+
+
+
 function PicksInterface() {
 
     const [games, setGames] = useState([]);
     const [week, setWeek] = useState(1);
     const [year, setYear] = useState(2021);
+
 
     async function fetchGames() {
         if (doesExist(year, week) === false) {
@@ -54,7 +58,7 @@ function PicksInterface() {
     return (
         <div className="col-lg-11 order-1 order-lg-2 d-flex flex-column align-items-center" id="contentWrapper">
             <div id="pageHeader"
-                 className="align-self-start w-100 px-2 mt-5 d-flex flex-column flex-lg-row justify-content-between">
+                 className="align-self-start w-100 px-2 my-5 d-flex flex-column flex-lg-row justify-content-between">
                 <div className="d-flex flex-column">
                     <h1>{year + " WEEK " + week}</h1>
                     <div className="textBar"/>
