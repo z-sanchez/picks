@@ -139,6 +139,13 @@ a {
   color: #FFFFFF;
 }
 
+.pick {
+  background-color: #3B80FF;
+}
+.pick h1, .pick p {
+  color: #FFFFFF;
+}
+
 @media (max-width: 991.98px) {
   #contentWrapper {
     height: 90vh;

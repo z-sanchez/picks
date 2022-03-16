@@ -1,14 +1,16 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import GameData from "./GameData";
 import {findWeeksGames} from "../Api/sportsDataAPI";
 import {updateCache, doesExist, getData} from "../Api/apiCache";
 import uniqid from 'uniqid';
-
-
+import userContext from "../utilities/UserContext";
 
 
 function PicksInterface() {
 
+    const context = useContext(userContext);
+    const [user, setUser] = useState(context.user);
+    const [picks, setPicks] = useState([]);
     const [games, setGames] = useState([]);
     const [week, setWeek] = useState(1);
     const [year, setYear] = useState(2021);
@@ -69,8 +71,8 @@ function PicksInterface() {
                     <button className="buttons m-0 mx-2" onClick={() => updateWeek(true)}>Next Week</button>
                 </div>
             </div>
-
-            {[renderGames(),  <button key={uniqid()} className="buttons mx-2 my-5 mx-lg-5" id="submitButton">Submit Picks</button>]}
+            {[renderGames(),
+                <button key={uniqid()} className="buttons mx-2 my-5 mx-lg-5" id="submitButton">Submit Picks</button>]}
         </div>
     );
 }

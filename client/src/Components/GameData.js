@@ -7,6 +7,13 @@ import {getTeamName, getTeamRecord, getGameLink, getGameTime} from "../Api/parse
 const GameData = (props) => {
 
     const [data, setData] = useState(null);
+    const [pickHome, setHomePick] = useState(null);
+
+
+    function pickTeam(home) {
+        if (!home) setHomePick(false);
+        else setHomePick(true);
+    }
 
 
     async function getGameData(abortSignal) {
@@ -33,11 +40,16 @@ const GameData = (props) => {
     if (data !== null) {
         let awayName = getTeamName(data, false), homeName = getTeamName(data, true),
             awayRecord = getTeamRecord(data, false), homeRecord = getTeamRecord(data, true),
-            gameTime = getGameTime(data), gameLink = getGameLink(data);
+            gameTime = getGameTime(data), gameLink = getGameLink(data), awayClass = 'game__away', homeClass = 'game__home';
+
+        if (pickHome != null){
+            if (pickHome === true) homeClass = homeClass + " pick";
+            else awayClass = awayClass + " pick";
+        }
 
         display = (
             <div className="game my-5 d-flex flex-column">
-                <div className="game__away my-3 d-flex flex-column align-items-center justify-content-center">
+                <div className={awayClass + " my-3 d-flex flex-column align-items-center justify-content-center"} onClick={() => pickTeam(false)}>
                     <h1>{awayName} </h1>
                     <p className="align-self-end">{awayRecord}</p>
                 </div>
@@ -48,7 +60,7 @@ const GameData = (props) => {
                     <p className="game__infoTimeDate">{gameTime}</p>
                 </div>
 
-                <div className="game__home my-3 d-flex flex-column align-items-center justify-content-center">
+                <div className={homeClass + " my-3 d-flex flex-column align-items-center justify-content-center"} onClick={() => pickTeam(true)}>
                     <h1>{homeName}</h1>
                     <p className="align-self-end">{homeRecord}</p>
                 </div>
