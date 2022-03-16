@@ -1,17 +1,17 @@
 import {initializeApp} from 'firebase/app';
-import { doc, setDoc } from "firebase/firestore";
-import {getDatabase, set, ref} from "firebase/database";
+import {doc, setDoc, getFirestore} from "firebase/firestore";
 import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut} from "firebase/auth";
 
 const firebase = initializeApp({
     apiKey: process.env.REACT_APP_FIREBASE_KEY,
     authDomain: process.env.REACT_APP_FIREBASE_DOMAIN,
-    projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-    storageBucket: process.env.STORAGE_BUCKET,
-    messagingSenderId: process.env.REACT_APP_MESSAGE_SENDER_ID,
-    appId: process.env.REACT_APP_APP_ID,
-    measurementId: process.env.REACT_APP_MEASUREMENT_ID
+    projectId: 'picks-a4dce',
+    storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGE_SENDER_ID,
+    appId: process.env.REACT_APP_FIREBASE_APP_ID,
+    measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
 });
+
 
 const auth = getAuth();
 
@@ -24,10 +24,11 @@ export async function createUserWithEmail(email, password) {
         password: password,
         picks: '[]',
     }
-    const database = getDatabase();
+    const database = getFirestore(firebase);
+    const usersRef = doc(database, 'users', email);
 
     return createUserWithEmailAndPassword(auth, email, password).then(() => {
-        set(ref(database, "users/" + "demo"), userDoc);
+        setDoc(usersRef, userDoc);
     });
 }
 
