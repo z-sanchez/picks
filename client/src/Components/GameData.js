@@ -2,7 +2,7 @@ import React from "react";
 import {useState, useEffect} from "react";
 import {getGameStats} from "../Api/sportsDataAPI";
 import {getTeamName, getTeamRecord, getGameLink, getGameTime} from "../Api/parsers";
-import {doesUserPickExist, getPickFromUserCache, updateUserCache} from "../firebase/userCache";
+import {doesUserPickExistInCache, getPickFromUserCache, updateUserCache} from "../firebase/userCache";
 import {doesGameDataExist, getGameDataFromCache, updateGameCache} from "../Api/apiCache";
 
 
@@ -13,6 +13,7 @@ const GameData = (props) => {
 
 
     function pickTeam(home) {
+        updateUserCache(props.year, props.week, props.id, home);
         if (!home) setHomePick(false);
         else setHomePick(true);
     }
@@ -30,6 +31,7 @@ const GameData = (props) => {
             });
         } else {
             console.log('games retrieved from cache for week: ' + props.week);
+            if (doesUserPickExistInCache(props.year, props.week, props.id)) setHomePick(getPickFromUserCache(props.year, props.week, props.id));
             setData(getGameDataFromCache(props.year, props.week, props.id));
         }
     }
