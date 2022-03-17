@@ -7,37 +7,44 @@ import PicksInterface from "./PicksInterface";
 import AppInterface from "./AppInterface";
 import StatsInterface from "./StatsInterface";
 import GroupsInterface from "./GroupsInterface";
+import {setUserCache} from "../firebase/userCache";
+import {getUserPicks} from "../firebase/firebase";
 
 function App() {
 
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState(null); //tells components whose info to render
+    const [userUpdated, setUserUpdated] = useState(false);
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(getAuth(), (user) => {
-            if (user) {
-                setUser(user);
-            }
-            else {
-                setUser(null);
-            }
-        });
-
-        return unsubscribe;
-    }, [user])
+        if (!userUpdated || (userUpdated === user)) { //runs at mount and at updateUser
+            const unsubscribe = onAuthStateChanged(getAuth(), (userResponse) => {
+                if (userUpdated && userResponse) { //if user has been updated and not signing out do nothing
+                    return null;
+                } else if (userResponse) { //if user is being set for mount
+                    setUser(userResponse.email);
+                } else { //if logged out clean userUpdated and user (don't know if I understand this completely. Logic with swtiching users and signing out while still returing async clean up confusing
+                    setUserUpdated(false);
+                    setUser(null);
+                }
+            });
+            return unsubscribe;
+        } else {
+            setUser(userUpdated); //sets user equal to the updated request
+        }
+    }, [user, userUpdated]);
 
 
     function updateUser(name) {
-        setUser(name);
+        setUserCache(getUserPicks(name)).then(() => { //clear user cache on user change
+            setUserUpdated(name);
+        });
     }
-
-    let contextData = {
-        user: user,
-        updateUser: updateUser,
-    }
-
 
     return (
-        <UserContext.Provider value={contextData}>
+        <UserContext.Provider value={{
+            user: user,
+            updateUser: updateUser,
+        }}>
             <BrowserRouter>
                 <Routes>
                     <Route path='/' element={<Login/>}/>
@@ -53,3 +60,5 @@ function App() {
 }
 
 export default App;
+
+

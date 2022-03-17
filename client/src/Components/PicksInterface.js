@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from "react";
-import {signOutApp} from "../firebase/firebase";
+import {signOutApp, submitUserPicks} from "../firebase/firebase";
 import GameData from "./GameData";
 import {findWeeksGames} from "../Api/sportsDataAPI";
 import {updateCache, doesExist, getData} from "../Api/apiCache";
@@ -11,7 +11,6 @@ function PicksInterface() {
 
     const context = useContext(userContext);
     const [user, setUser] = useState(context.user);
-    const [picks, setPicks] = useState([]);
     const [games, setGames] = useState([]);
     const [week, setWeek] = useState(1);
     const [year, setYear] = useState(2021);
@@ -25,7 +24,7 @@ function PicksInterface() {
                     setGames(gamesFound);
                 })
                 .catch((message) => {
-                    console.log("fetch aborted in PicksInterface")
+                    console.log("fetch aborted in PicksInterface");
                 });
         } else if (games.length === 0) { //check if games haven't been picked from cache already
             setGames(getData(year, week));
@@ -73,7 +72,8 @@ function PicksInterface() {
                 </div>
             </div>
             {[renderGames(),
-                <button key={uniqid()} className="buttons mx-2 my-5 mx-lg-5" id="submitButton">Submit Picks</button>]}
+                <button key={uniqid()} className="buttons mx-2 my-5 mx-lg-5" id="submitButton"
+                        onClick={() => submitUserPicks(context.user)}>Submit Picks</button>]}
         </div>
     );
 }

@@ -78,5 +78,12 @@ export function updateUserCache(year, week, gameID, pick) {
     }
 }
 
+export async function setUserCache(cache) {
+    userCache = await cache;
+    console.log("user's cache:");
+    console.log(userCache);
+}
 
-
+export function getUserCache() {
+    return userCache;
+}

@@ -1,11 +1,12 @@
 import {initializeApp} from 'firebase/app';
-import {doc, setDoc, getFirestore} from "firebase/firestore";
+import {doc, setDoc, getDoc, updateDoc, getFirestore} from "firebase/firestore";
 import {
     getAuth,
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     signOut
 } from "firebase/auth";
+import {getUserCache} from "./userCache";
 
 const firebase = initializeApp({
     apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -16,7 +17,6 @@ const firebase = initializeApp({
     appId: process.env.REACT_APP_FIREBASE_APP_ID,
     measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
 });
-
 
 
 //sign in and sign out functions
@@ -41,6 +41,7 @@ export async function signInWithEmail(email, password) {
     return signInWithEmailAndPassword(getAuth(), email, password);
 }
 
+
 export async function signOutApp() {
     try {
         await signOut(getAuth()).then(() => {
@@ -52,3 +53,18 @@ export async function signOutApp() {
 }
 
 
+export async function getUserPicks(username) {
+    const database = getFirestore(firebase);
+    const docRef = doc(database, "users", username);
+    const docSnap = await getDoc(docRef);
+
+    return JSON.parse(docSnap.data().picks);
+}
+
+export async function submitUserPicks(username) {
+    const database = getFirestore(firebase);
+    const docRef = doc(database, "users", username);
+    const data = {picks: JSON.stringify(getUserCache())};
+
+    await updateDoc(docRef, data);
+}
