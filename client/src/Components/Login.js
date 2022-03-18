@@ -1,19 +1,17 @@
-import React, {useState, useContext, useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import {useNavigate} from 'react-router-dom';
 import {prepForm, authStatus} from "../utilities/domManipulators";
 import {signInWithEmail, createUserWithEmail} from "../firebase/firebase";
 import graphic from '../Assets/Images/footballGraphic.png';
-import UserContext from "../utilities/UserContext";
 
-function Login() {
+const Login = (props) => {
 
 
     const [loggingIn, setLoggingIn] = useState(true);
     const navigate = useNavigate();
-    const context = useContext(UserContext);
 
     useEffect(() => {
-        if (context.user != null) navigate('/app/picks');
+        if (props.user != null) navigate('/app/picks');
     });
 
     function changeForm() {
@@ -29,7 +27,6 @@ function Login() {
 
         if (loggingIn) {
             await signInWithEmail(email, password).then(() => {
-                context.updateUser(email);
                 navigate('/app/picks');
             }).catch((err) => authStatus(true));
         }

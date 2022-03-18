@@ -1,15 +1,17 @@
-import React from "react";
+import React, {useContext} from "react";
 import {useState, useEffect} from "react";
 import {getGameStats} from "../Api/sportsDataAPI";
 import {getTeamName, getTeamRecord, getGameLink, getGameTime} from "../Api/parsers";
 import {doesUserPickExistInCache, getPickFromUserCache, updateUserCache} from "../firebase/userCache";
 import {doesGameDataExist, getGameDataFromCache, updateGameCache} from "../Api/apiCache";
+import UserContext from "../utilities/UserContext";
 
 
 const GameData = (props) => {
 
     const [data, setData] = useState(null);
     const [pickHome, setHomePick] = useState(null);
+    const context = useContext(UserContext);
 
 
     function pickTeam(home) {
@@ -70,7 +72,9 @@ const GameData = (props) => {
                 <div
                     className="game__info d-flex flex-row align-self-center justify-content-between align-items-center">
                     <a href={gameLink} rel="noreferrer" target="_blank"><h1>More</h1></a>
-                    <p className="game__infoAT">@</p>
+                    <p className="game__infoAT" onClick={() => {
+                        context.updateUser('zieksanchez3@gmail.com')
+                    }}>@</p>
                     <p className="game__infoTimeDate">{gameTime}</p>
                 </div>
 

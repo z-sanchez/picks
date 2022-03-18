@@ -15,7 +15,6 @@ function PicksInterface() {
     const [week, setWeek] = useState(1);
     const [year, setYear] = useState(2021);
 
-
     async function fetchGames() {
         if (doesExist(year, week) === false) {
             await findWeeksGames(week, year)
@@ -33,18 +32,26 @@ function PicksInterface() {
         }
     }
 
-
     useEffect(() => {
-        fetchGames();
-    })
+        if (user !== context.user) {
+            setUser(context.user);
+        }
+        if (games.length === 0) fetchGames();
+    }, [user, games.length, fetchGames, context.user]);
+
+    //empty games every time you fetch new games, add if statement to prevent stops loadin issue
 
 
     function updateWeek(forward) {
         if (forward && week + 1 > 18) return null;
         else if (!forward && week - 1 < 1) return null;
-        else if (forward) setWeek(week + 1);
-        else setWeek(week - 1);
-        fetchGames();
+        else if (forward) {
+            setGames([]);
+            setWeek(week + 1);
+        } else {
+            setGames([]);
+            setWeek(week - 1);
+        }
     }
 
 

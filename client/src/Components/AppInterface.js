@@ -1,27 +1,38 @@
-import React, {useContext, useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import Sidebar from "../layouts/Sidebar";
 import {Outlet, useNavigate} from "react-router-dom";
-import userContext from "../utilities/UserContext";
+import UserContext from "../utilities/UserContext";
+import {setUserCache} from "../firebase/userCache";
+import {getUserPicks} from "../firebase/firebase";
 
 
+const AppInterface = (props) => {
 
-function AppInterface() {
-
-    const context = useContext(userContext);
+    const [showUser, setShowUser] = useState(props.user);
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (context.user === null) navigate('/');
+        if (props.user === null) navigate('/');
     });
 
-    if (context.user != null) { //don't show app unless logged in
+    async function updateUser(name) {
+        await setUserCache(getUserPicks(name));
+        setShowUser(name);
+    }
+
+    if (showUser != null) { //don't show app unless logged in
         return (
-            <div className="container-fluid" id="appWrapper">
-                <div className="row flex-row">
-                    <Sidebar/>
-                    <Outlet/>
+            <UserContext.Provider value={{
+                user: showUser,
+                updateUser: updateUser,
+            }}>
+                <div className="container-fluid" id="appWrapper">
+                    <div className="row flex-row">
+                        <Sidebar/>
+                        <Outlet/>
+                    </div>
                 </div>
-            </div>
+            </UserContext.Provider>
         )
     }
 

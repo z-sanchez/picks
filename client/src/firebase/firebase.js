@@ -9,13 +9,7 @@ import {
 import {getUserCache} from "./userCache";
 
 const firebase = initializeApp({
-    apiKey: process.env.REACT_APP_FIREBASE_KEY,
-    authDomain: process.env.REACT_APP_FIREBASE_DOMAIN,
-    projectId: 'picks-a4dce',
-    storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGE_SENDER_ID,
-    appId: process.env.REACT_APP_FIREBASE_APP_ID,
-    measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
+    
 });
 
 
@@ -38,6 +32,7 @@ export async function createUserWithEmail(email, password) {
 
 //sign in to firebase with demo credentials
 export async function signInWithEmail(email, password) {
+    console.log("sign in called");
     return signInWithEmailAndPassword(getAuth(), email, password);
 }
 
