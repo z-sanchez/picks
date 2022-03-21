@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import UserContext from "../utilities/UserContext";
 import {onAuthStateChanged, getAuth} from "firebase/auth";
 import Login from "./Login";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
@@ -14,7 +13,6 @@ function App() {
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(getAuth(), (userResponse) => {
-            console.log("auth change");
             if (userResponse) {
                 setUser(userResponse.email);
             } else {
@@ -25,18 +23,17 @@ function App() {
     });
 
 
-
     return (
-            <BrowserRouter>
-                <Routes>
-                    <Route path='/' element={<Login user={user}/>}/>
-                    <Route path='/app' element={<AppInterface user={user}/>}>
-                        <Route path="picks" element={<PicksInterface/>}/>
-                        <Route path="stats" element={<StatsInterface/>}/>
-                        <Route path="groups" element={<GroupsInterface/>}/>
-                    </Route>
-                </Routes>
-            </BrowserRouter>
+        <BrowserRouter>
+            <Routes>
+                <Route path='/' element={<Login user={user}/>}/>
+                <Route path='/app' element={<AppInterface user={user}/>}>
+                    <Route path="picks" element={<PicksInterface/>}/>
+                    <Route path="stats" element={<StatsInterface/>}/>
+                    <Route path="groups" element={<GroupsInterface/>}/>
+                </Route>
+            </Routes>
+        </BrowserRouter>
     );
 }
 
