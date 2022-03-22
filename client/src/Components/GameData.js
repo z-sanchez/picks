@@ -27,6 +27,7 @@ const GameData = (props) => {
         if (doesGameDataExist(props.year, props.week, props.id) === false) {
             console.log('games retrieved from fetch');
             await getGameStats(props.id, abortSignal).then((gameData) => {
+                if (doesUserPickExistInCache(props.year, props.week, props.id)) setHomePick(getPickFromUserCache(props.year, props.week, props.id));
                 setData(gameData);
             }).catch((message) => {
                 console.log("fetch aborted in GameData");

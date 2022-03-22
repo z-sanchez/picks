@@ -6,6 +6,8 @@ import PicksInterface from "./PicksInterface";
 import AppInterface from "./AppInterface";
 import StatsInterface from "./StatsInterface";
 import GroupsInterface from "./GroupsInterface";
+import {setUserCache} from "../firebase/userCache";
+import {getUserPicks} from "../firebase/firebase";
 
 function App() {
 
@@ -14,7 +16,7 @@ function App() {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(getAuth(), (userResponse) => {
             if (userResponse) {
-                setUser(userResponse.email);
+                setUserCache(getUserPicks(userResponse.email)).then(() => setUser(userResponse.email));
             } else {
                 setUser(null);
             }
