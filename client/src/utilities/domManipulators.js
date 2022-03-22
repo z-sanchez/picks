@@ -36,3 +36,7 @@ export function authStatus(error) {
     }
 
 }
+
+export function advanceWeekPrompt() {
+    alert("ADVANCING WEEK: Because the season is over, your results will be displayed to you immediately");
+}

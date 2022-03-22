@@ -26,6 +26,13 @@ export function getGameLink(data) {
     return link;
 }
 
+export function getTeamScore(data, home) {
+    let index = 0;
+    if (!home) index = 1;
+    let score = data.competitions[0].competitors[index].score;
+
+    return score;
+}
 
 export function getGameTime(data) {
     const date = new Date(data.date);

@@ -146,6 +146,14 @@ a {
   color: #FFFFFF;
 }
 
+.winner {
+  border: #3bff45 3px solid;
+}
+
+.loser {
+  border: #ff3b3b 3px solid;
+}
+
 @media (max-width: 991.98px) {
   #contentWrapper {
     height: 90vh;

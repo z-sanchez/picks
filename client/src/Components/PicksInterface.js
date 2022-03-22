@@ -5,6 +5,7 @@ import {findWeeksGames} from "../Api/sportsDataAPI";
 import {updateCache, doesExist, getData} from "../Api/apiCache";
 import uniqid from 'uniqid';
 import userContext from "../utilities/UserContext";
+import {advanceWeekPrompt} from "../utilities/domManipulators";
 
 
 function PicksInterface() {
@@ -14,6 +15,7 @@ function PicksInterface() {
     const [games, setGames] = useState([]);
     const [week, setWeek] = useState(1);
     const [year, setYear] = useState(2021);
+    const [endOfWeek, setEndOfWeek] = useState(false);
 
 
     useEffect(() => {
@@ -34,13 +36,11 @@ function PicksInterface() {
             }
         }
 
-
         if (user !== context.user) {
             setUser(context.user);
         }
 
         if (games.length === 0) fetchGames();
-
     }, [user, games.length, games, week, year, context.user]);
 
 
@@ -56,16 +56,26 @@ function PicksInterface() {
         }
     }
 
+    function handleSubmit() {
+        submitUserPicks(context.user);
+        advanceWeekPrompt();
+        setEndOfWeek(true);
+    }
 
     function renderGames() {
+
+        let submitButton = (<button key={uniqid()} className="buttons mx-2 my-5 mx-lg-5" id="submitButton"
+                              onClick={handleSubmit}>Submit Picks</button>);
+        if (endOfWeek) submitButton = null;
         if (games.length !== 0) {
             return [games.map((game) => {
-                return <GameData id={game} week={week} year={year} key={uniqid()}/>
-            }), (<button key={uniqid()} className="buttons mx-2 my-5 mx-lg-5" id="submitButton"
-                         onClick={() => submitUserPicks(context.user)}>Submit Picks</button>)
-            ]
+                return <GameData id={game} week={week} year={year} end={endOfWeek} key={uniqid()}/>
+            }), submitButton];
         } else return null;
     }
+
+    let score = (<h1 className="text-center">Your Score: getUserScore</h1>);
+    if (!endOfWeek) score = null;
 
 
     return (
@@ -82,6 +92,7 @@ function PicksInterface() {
                     <button className="buttons m-0 mx-2" onClick={() => updateWeek(true)}>Next Week</button>
                 </div>
             </div>
+            {score}
             {renderGames()}
         </div>
     );
