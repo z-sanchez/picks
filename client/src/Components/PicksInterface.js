@@ -15,31 +15,33 @@ function PicksInterface() {
     const [week, setWeek] = useState(1);
     const [year, setYear] = useState(2021);
 
-    async function fetchGames() {
-        if (doesExist(year, week) === false) {
-            await findWeeksGames(week, year)
-                .then((gamesFound) => {
-                    updateCache(year, week, gamesFound);
-                    setGames(gamesFound);
-                })
-                .catch((message) => {
-                    console.log("fetch aborted in PicksInterface");
-                });
-        } else if (games.length === 0) { //check if games haven't been picked from cache already
-            setGames(getData(year, week));
-        } else if (getData(year, week)[0] !== games[0]) { //if state holds cache value from different week
-            setGames(getData(year, week));
-        }
-    }
 
     useEffect(() => {
+        async function fetchGames() {
+            if (doesExist(year, week) === false) {
+                await findWeeksGames(week, year)
+                    .then((gamesFound) => {
+                        updateCache(year, week, gamesFound);
+                        setGames(gamesFound);
+                    })
+                    .catch((message) => {
+                        console.log("fetch aborted in PicksInterface");
+                    });
+            } else if (games.length === 0) { //check if games haven't been picked from cache already
+                setGames(getData(year, week));
+            } else if (getData(year, week)[0] !== games[0]) { //if state holds cache value from different week
+                setGames(getData(year, week));
+            }
+        }
+
+
         if (user !== context.user) {
             setUser(context.user);
         }
-        if (games.length === 0) fetchGames();
-    }, [user, games.length, fetchGames, context.user]);
 
-    //empty games every time you fetch new games, add if statement to prevent stops loadin issue
+        if (games.length === 0) fetchGames();
+
+    }, [user, games.length, games, week, year, context.user]);
 
 
     function updateWeek(forward) {
@@ -57,9 +59,11 @@ function PicksInterface() {
 
     function renderGames() {
         if (games.length !== 0) {
-            return games.map((game) => {
+            return [games.map((game) => {
                 return <GameData id={game} week={week} year={year} key={uniqid()}/>
-            });
+            }), (<button key={uniqid()} className="buttons mx-2 my-5 mx-lg-5" id="submitButton"
+                         onClick={() => submitUserPicks(context.user)}>Submit Picks</button>)
+            ]
         } else return null;
     }
 
@@ -78,9 +82,7 @@ function PicksInterface() {
                     <button className="buttons m-0 mx-2" onClick={() => updateWeek(true)}>Next Week</button>
                 </div>
             </div>
-            {[renderGames(),
-                <button key={uniqid()} className="buttons mx-2 my-5 mx-lg-5" id="submitButton"
-                        onClick={() => submitUserPicks(context.user)}>Submit Picks</button>]}
+            {renderGames()}
         </div>
     );
 }

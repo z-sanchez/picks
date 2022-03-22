@@ -27,7 +27,7 @@ const Login = (props) => {
 
         if (loggingIn) {
             await signInWithEmail(email, password).then(() => {
-                navigate('/app/picks');
+                console.log("logged in");
             }).catch((err) => authStatus(true));
         }
         else {

@@ -12,11 +12,12 @@ import {getUserPicks} from "../firebase/firebase";
 function App() {
 
     const [user, setUser] = useState(null);
+    let counter = 0;
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(getAuth(), (userResponse) => {
             if (userResponse) {
-                setUserCache(getUserPicks(userResponse.email)).then(() => setUser(userResponse.email));
+                setUserCache(getUserPicks(userResponse.email)).then(() => setUser(userResponse.email)).then(() => console.log("call: " + (++counter)));
             } else {
                 setUser(null);
             }
