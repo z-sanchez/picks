@@ -74,6 +74,8 @@ function PicksInterface() {
         } else return null;
     }
 
+
+
     let score = (<h1 className="text-center">Your Score: getUserScore</h1>);
     if (!endOfWeek) score = null;
 

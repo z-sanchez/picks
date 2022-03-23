@@ -31,7 +31,7 @@ export function getTeamScore(data, home) {
     if (!home) index = 1;
     let score = data.competitions[0].competitors[index].score;
 
-    return score;
+    return parseInt(score);
 }
 
 export function getGameTime(data) {
