@@ -64,10 +64,10 @@ export async function getUserPicks(username) {
 }
 
 
-export async function submitUserPicks(username) { //pass year and week here so we can mark submit
+export async function submitUserPicks(username, year, week) { //pass year and week here so we can mark submit
     const database = getFirestore(firebase);
     const docRef = doc(database, "users", username);
-    const data = {picks: JSON.stringify(getUserCache())};
+    const data = {picks: JSON.stringify(getUserCache(year, week))};
 
     await updateDoc(docRef, data);
 }

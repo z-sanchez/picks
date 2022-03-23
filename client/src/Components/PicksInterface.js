@@ -57,7 +57,7 @@ function PicksInterface() {
     }
 
     function handleSubmit() {
-        submitUserPicks(context.user);
+        submitUserPicks(context.user, year, week);
         advanceWeekPrompt();
         setEndOfWeek(true);
     }

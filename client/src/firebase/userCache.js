@@ -84,6 +84,10 @@ export async function setUserCache(cache) {
     console.log(userCache);
 }
 
-export function getUserCache() {
+export function getUserCache(year, week) {
+    const findYear = (object) => object.year === year;
+    const findWeek = (object) => object.week === week;
+    let weekArray = userCache[userCache.findIndex(findYear)].array;
+    weekArray[weekArray.findIndex(findWeek)].submitted = true;
     return userCache;
 }
