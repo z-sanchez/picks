@@ -63,7 +63,8 @@ export async function getUserPicks(username) {
     return JSON.parse(docSnap.data().picks);
 }
 
-export async function submitUserPicks(username) {
+
+export async function submitUserPicks(username) { //pass year and week here so we can mark submit
     const database = getFirestore(firebase);
     const docRef = doc(database, "users", username);
     const data = {picks: JSON.stringify(getUserCache())};
