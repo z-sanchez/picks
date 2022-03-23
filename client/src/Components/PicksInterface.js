@@ -6,6 +6,7 @@ import {updateCache, doesExist, getData} from "../Api/apiCache";
 import uniqid from 'uniqid';
 import userContext from "../utilities/UserContext";
 import {advanceWeekPrompt} from "../utilities/domManipulators";
+import {weekSubmitted} from "../firebase/userCache";
 
 
 function PicksInterface() {
@@ -17,8 +18,8 @@ function PicksInterface() {
     const [year, setYear] = useState(2021);
     const [endOfWeek, setEndOfWeek] = useState(false);
 
-
     useEffect(() => {
+        setEndOfWeek(weekSubmitted(year, week));
         async function fetchGames() {
             if (doesExist(year, week) === false) {
                 await findWeeksGames(week, year)

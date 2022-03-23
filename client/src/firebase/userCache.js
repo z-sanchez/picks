@@ -91,3 +91,17 @@ export function getUserCache(year, week) {
     weekArray[weekArray.findIndex(findWeek)].submitted = true;
     return userCache;
 }
+
+//might try to implement try and catch for other methods searching for object properties
+export function weekSubmitted(year, week) {
+    const findYear = (object) => object.year === year;
+    const findWeek = (object) => object.week === week;
+    try {
+        let weekArray = userCache[userCache.findIndex(findYear)].array;
+        return weekArray[weekArray.findIndex(findWeek)].submitted;
+    }
+    catch (error) {
+        console.log("error: " + error);
+        return false;
+    }
+}
