@@ -67,10 +67,10 @@ const GameData = (props) => {
         if (props.end) {
             awayRecord = awayScore;
             homeRecord = homeScore;
-            if (homeWinner && pickHome) homeClass = homeClass + " winner";
-            else if (!homeWinner && !pickHome) awayClass = awayClass + " winner";
-            else if (homeWinner && !pickHome) awayClass = awayClass + " loser";
-            else if (!homeWinner && pickHome) homeClass = homeClass + " loser";
+            if (homeWinner && pickHome) homeClass = homeClass + " winner noHover--pick";
+            else if (!homeWinner && !pickHome) awayClass = awayClass + " winner noHover--pick";
+            else if (homeWinner && !pickHome) awayClass = awayClass + " loser noHover--nonPick";
+            else if (!homeWinner && pickHome) homeClass = homeClass + " loser noHover-nonPick";
         }
 
         display = (

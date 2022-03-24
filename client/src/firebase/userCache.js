@@ -170,7 +170,6 @@ export function calculateUserScore(year, week) {
 export function getScoreFromUserCache(year, week) {
     const findYear = (object) => object.year === year;
     const findWeek = (object) => object.week === week;
-    console.log(year + " " + week);
 
     try {
         let weekArray = userCache[userCache.findIndex(findYear)].array;
