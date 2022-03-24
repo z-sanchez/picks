@@ -6,7 +6,7 @@ import {updateCache, doesExist, getData} from "../Api/apiCache";
 import uniqid from 'uniqid';
 import userContext from "../utilities/UserContext";
 import {advanceWeekPrompt} from "../utilities/domManipulators";
-import {calculateUserScore, isWeekSubmitted} from "../firebase/userCache";
+import {calculateUserScore, getScoreFromUserCache, isWeekFinished} from "../firebase/userCache";
 import {endWeek} from "../firebase/userCache";
 
 
@@ -20,7 +20,7 @@ function PicksInterface() {
     const [endOfWeek, setEndOfWeek] = useState(false);
 
     useEffect(() => {
-        setEndOfWeek(isWeekSubmitted(year, week));
+        setEndOfWeek(isWeekFinished(year, week));
         async function fetchGames() {
             if (doesExist(year, week) === false) {
                 await findWeeksGames(week, year)
@@ -59,7 +59,8 @@ function PicksInterface() {
     }
 
     function handleSubmit() {
-        //endWeek(year, week); //this should be moved after demo. This method is responsible for ending entire week in real time
+        //alert for no pick
+        endWeek(year, week); //this should be moved after demo. This method is responsible for ending entire week in real time
         calculateUserScore(year, week);
         submitUserPicks(context.user, year, week);
         advanceWeekPrompt();
@@ -80,8 +81,8 @@ function PicksInterface() {
 
 
 
-    let score = (<h1 className="text-center">Your Score: getUserScore</h1>);
-    if (!endOfWeek) score = null;
+    let score = null;
+    if (endOfWeek) score = (<h1 className="text-center">{"Your Score: " + getScoreFromUserCache(year, week)}</h1>);
 
 
     return (

@@ -17,11 +17,12 @@
 //  }
 // ];
 
-import {getGameDataFromCache} from "../Api/apiCache";
+import {getGameCache, getGameDataFromCache} from "../Api/apiCache";
+import {getTeamScore} from "../Api/parsers";
 
 let userCache = [];
 
-
+//checks if user has entered a pick
 export function doesUserPickExistInCache(year, week, gameID) {
     const findYear = (object) => object.year === year;
     const findWeek = (object) => object.week === week;
@@ -45,7 +46,7 @@ export function doesUserPickExistInCache(year, week, gameID) {
     }
 }
 
-
+//grabs users pick
 export function getPickFromUserCache(year, week, gameID) {
     const findYear = (object) => object.year === year;
     const findWeek = (object) => object.week === week;
@@ -56,7 +57,7 @@ export function getPickFromUserCache(year, week, gameID) {
     return game[game.findIndex(findGame)].homePick;
 }
 
-
+//adds pick to userCache
 export function updateUserCache(year, week, gameID, pick) {
     const findYear = (object) => object.year === year;
     const findWeek = (object) => object.week === week;
@@ -80,12 +81,16 @@ export function updateUserCache(year, week, gameID, pick) {
     }
 }
 
+//loads user data from database into cache
 export async function setUserCache(cache) {
     userCache = await cache;
     console.log("user's cache:");
     console.log(userCache);
 }
 
+//returns userCache to database and marks it being submitted to database. Only happens when picks are made has happened
+//submitted is useless for demo purposes because end of the week occurs and pick submissions are done together
+//real use, these operations would happen separately one when picks are submitted and another when actually time passes
 export function getUserCache(year, week) {
     const findYear = (object) => object.year === year;
     const findWeek = (object) => object.week === week;
@@ -94,46 +99,32 @@ export function getUserCache(year, week) {
     return userCache;
 }
 
+
+//checks if week is data is complete meaning both picks and end of week conditions have been met. This sets state to display results
 //might try to implement try and catch for other methods searching for object properties
-export function isWeekSubmitted(year, week) {
-    const findYear = (object) => object.year === year;
-    const findWeek = (object) => object.week === week;
-    try {
-        let weekArray = userCache[userCache.findIndex(findYear)].array;
-        return weekArray[weekArray.findIndex(findWeek)].submitted;
-    }
-    catch (error) {
-        console.log("error: " + error);
-        return false;
-    }
-}
-
-
-//finish week
-//add weekOver property to object
-export function endWeek(year, week) {
-    const findYear = (object) => object.year === year;
-    const findWeek = (object) => object.week === week;
-    let weekArray = userCache[userCache.findIndex(findYear)].array;
-    weekArray[weekArray.findIndex(findWeek)].endOfWeek = true;
-    calculateUserScore();
-    return userCache;
-}
-
-
-
-function isWeekFinished(year, week) {
+export function isWeekFinished(year, week) {
     const findYear = (object) => object.year === year;
     const findWeek = (object) => object.week === week;
     try {
         let weekArray = userCache[userCache.findIndex(findYear)].array;
         return weekArray[weekArray.findIndex(findWeek)].endOfWeek;
-    }
-    catch (error) {
-        console.log("error: " + error);
+    } catch (error) {
         return false;
     }
 }
+
+
+//finishes week and marks week ready for displaying results
+//add endOfWeek and score property to object
+export function endWeek(year, week) {
+    const findYear = (object) => object.year === year;
+    const findWeek = (object) => object.week === week;
+    let weekArray = userCache[userCache.findIndex(findYear)].array;
+    //all picks submitted before calculating check
+    weekArray[weekArray.findIndex(findWeek)].score = calculateUserScore(year, week);
+    weekArray[weekArray.findIndex(findWeek)].endOfWeek = true;
+}
+
 
 //calc score
 //if week finished, check for first game if winner is null bail. No need to calculate while week is still going.
@@ -145,25 +136,49 @@ export function calculateUserScore(year, week) {
     const findYear = (object) => object.year === year;
     const findWeek = (object) => object.week === week;
 
-    if (isWeekFinished()) {
-        return isWeekFinished();
-    }
-    else {
-        //alert for no pick
-
-        //get game data from gameCache!!!!!
-        console.log(userCache);
-        let weekGames = userCache[userCache.findIndex(findYear)].array;
-        weekGames = weekGames[weekGames.findIndex(findWeek)].games;
+    if (!isWeekFinished()) {
+        let gameCache = getGameCache();
+        let weekArray = gameCache[gameCache.findIndex(findYear)].array;
+        weekArray = weekArray[weekArray.findIndex(findWeek)];
+        let weekGames = weekArray.games;
 
 
         for (let i = 0; i < weekGames.length; i++) {
             //find winner using parser functions
             //compare homePick to winner increment appropriate variable
-            let data = getGameDataFromCache(year, week, weekGames[i].gameID);
-            console.log(data);
+            let data = getGameDataFromCache(year, week, weekGames[i].gameID),
+                homeWinner = getTeamScore(data, true) > getTeamScore(data, false);
+
+
+            if (homeWinner === getPickFromUserCache(year, week, weekGames[i].gameID).homePick) {
+                ++wins;
+            } else if (!homeWinner === !getPickFromUserCache(year, week, weekGames[i].gameID).homePick) {
+                ++wins;
+            } else {
+                ++losses;
+            }
         }
+
         //record result into userRecord
+        return {
+            wins: wins,
+            losses: losses,
+        }
+    }
+}
+
+export function getScoreFromUserCache(year, week) {
+    const findYear = (object) => object.year === year;
+    const findWeek = (object) => object.week === week;
+    console.log(year + " " + week);
+
+    try {
+        let weekArray = userCache[userCache.findIndex(findYear)].array;
+        let wins = weekArray[weekArray.findIndex(findWeek)].score.wins;
+        let losses = weekArray[weekArray.findIndex(findWeek)].score.losses;
+        return wins + "-" + losses;
+    } catch (err) {
+        return "";
     }
 }
 

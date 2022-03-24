@@ -111,4 +111,6 @@ export async function updateGameCache(year, week, gameID, data) {
     await update();
 }
 
-
+export function getGameCache() {
+    return gameCache;
+}

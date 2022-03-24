@@ -45,7 +45,7 @@ const GameData = (props) => {
         let gameController = new AbortController();
         getGameData(gameController.signal);
         return function abort() {
-            if (data !== null) updateGameCache(props.year, props.week, props.id, data);
+            if (data !== null && !doesGameDataExist(props.year, props.week, props.id)) updateGameCache(props.year, props.week, props.id, data);
             gameController.abort();
         }
     });
