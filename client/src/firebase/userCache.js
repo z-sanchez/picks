@@ -17,6 +17,8 @@
 //  }
 // ];
 
+import {getGameDataFromCache} from "../Api/apiCache";
+
 let userCache = [];
 
 
@@ -93,7 +95,7 @@ export function getUserCache(year, week) {
 }
 
 //might try to implement try and catch for other methods searching for object properties
-export function weekSubmitted(year, week) {
+export function isWeekSubmitted(year, week) {
     const findYear = (object) => object.year === year;
     const findWeek = (object) => object.week === week;
     try {
@@ -105,3 +107,63 @@ export function weekSubmitted(year, week) {
         return false;
     }
 }
+
+
+//finish week
+//add weekOver property to object
+export function endWeek(year, week) {
+    const findYear = (object) => object.year === year;
+    const findWeek = (object) => object.week === week;
+    let weekArray = userCache[userCache.findIndex(findYear)].array;
+    weekArray[weekArray.findIndex(findWeek)].endOfWeek = true;
+    calculateUserScore();
+    return userCache;
+}
+
+
+
+function isWeekFinished(year, week) {
+    const findYear = (object) => object.year === year;
+    const findWeek = (object) => object.week === week;
+    try {
+        let weekArray = userCache[userCache.findIndex(findYear)].array;
+        return weekArray[weekArray.findIndex(findWeek)].endOfWeek;
+    }
+    catch (error) {
+        console.log("error: " + error);
+        return false;
+    }
+}
+
+//calc score
+//if week finished, check for first game if winner is null bail. No need to calculate while week is still going.
+//check if score is recorded, if so return it
+//else run through data and add wins for every correct guess and losses for every other
+//add result to object and return
+export function calculateUserScore(year, week) {
+    let wins = 0, losses = 0;
+    const findYear = (object) => object.year === year;
+    const findWeek = (object) => object.week === week;
+
+    if (isWeekFinished()) {
+        return isWeekFinished();
+    }
+    else {
+        //alert for no pick
+
+        //get game data from gameCache!!!!!
+        console.log(userCache);
+        let weekGames = userCache[userCache.findIndex(findYear)].array;
+        weekGames = weekGames[weekGames.findIndex(findWeek)].games;
+
+
+        for (let i = 0; i < weekGames.length; i++) {
+            //find winner using parser functions
+            //compare homePick to winner increment appropriate variable
+            let data = getGameDataFromCache(year, week, weekGames[i].gameID);
+            console.log(data);
+        }
+        //record result into userRecord
+    }
+}
+
