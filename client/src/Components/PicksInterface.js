@@ -6,9 +6,8 @@ import {updateCache, doesExist, getData} from "../Api/apiCache";
 import uniqid from 'uniqid';
 import userContext from "../utilities/UserContext";
 import {advanceWeekPrompt} from "../utilities/domManipulators";
-import {calculateUserScore, getScoreFromUserCache, isWeekFinished} from "../firebase/userCache";
+import {calculateUserScore, getScoreFromUserCache, isWeekFinished, validPicks} from "../firebase/userCache";
 import {endWeek} from "../firebase/userCache";
-
 
 function PicksInterface() {
 
@@ -21,6 +20,7 @@ function PicksInterface() {
 
     useEffect(() => {
         setEndOfWeek(isWeekFinished(year, week));
+
         async function fetchGames() {
             if (doesExist(year, week) === false) {
                 await findWeeksGames(week, year)
@@ -59,7 +59,11 @@ function PicksInterface() {
     }
 
     function handleSubmit() {
-        //alert for no pick
+        //alert for no pick, match games added to cache to amount of games in week data, if descrepency abort function with alert
+        if (!validPicks(year, week, games)) {
+            alert("Missing picks");
+            return
+        }
         endWeek(year, week); //this should be moved after demo. This method is responsible for ending entire week in real time
         calculateUserScore(year, week);
         submitUserPicks(context.user, year, week);
@@ -70,7 +74,7 @@ function PicksInterface() {
     function renderGames() {
 
         let submitButton = (<button key={uniqid()} className="buttons mx-2 my-5 mx-lg-5" id="submitButton"
-                              onClick={handleSubmit}>Submit Picks</button>);
+                                    onClick={handleSubmit}>Submit Picks</button>);
         if (endOfWeek) submitButton = null;
         if (games.length !== 0) {
             return [games.map((game) => {
@@ -78,7 +82,6 @@ function PicksInterface() {
             }), submitButton];
         } else return null;
     }
-
 
 
     let score = null;

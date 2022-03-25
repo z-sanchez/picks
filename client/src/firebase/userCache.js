@@ -81,6 +81,19 @@ export function updateUserCache(year, week, gameID, pick) {
     }
 }
 
+export function validPicks(year, week, games) {
+    const findYear = (object) => object.year === year;
+    const findWeek = (object) => object.week === week;
+
+    let gameArray = userCache[userCache.findIndex(findYear)].array;
+    gameArray = gameArray[gameArray.findIndex(findWeek)].games;
+
+    console.log(gameArray.length);
+    console.log(games.length);
+
+    return gameArray.length === games.length;
+}
+
 //loads user data from database into cache
 export async function setUserCache(cache) {
     userCache = await cache;
@@ -180,4 +193,6 @@ export function getScoreFromUserCache(year, week) {
         return "";
     }
 }
+
+
 
