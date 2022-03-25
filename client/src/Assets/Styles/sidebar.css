@@ -76,7 +76,7 @@ h5 {
   align-content: center;
 }
 
-.sidebar__icon--container:hover {
+.sidebar__icon--container:hover, .active {
   opacity: 100%;
 }
 
