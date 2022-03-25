@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap");
-html, body {
+html, body, #root {
   height: 100%;
 }
 
@@ -91,7 +91,7 @@ h5 {
   }
 
   #sidebar {
-    height: 10vh;
+    height: 10%;
     border-radius: 2vh 2vh 0 0;
   }
 

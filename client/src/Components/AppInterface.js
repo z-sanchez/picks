@@ -27,7 +27,7 @@ const AppInterface = (props) => {
                 updateUser: updateUser,
             }}>
                 <div className="container-fluid" id="appWrapper">
-                    <div className="row flex-row">
+                    <div className="row flex-row content__height">
                         <Sidebar/>
                         <Outlet/>
                     </div>
