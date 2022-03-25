@@ -60,17 +60,23 @@ const GameData = (props) => {
             homeClass = 'game__home', homeScore = getTeamScore(data, true), awayScore = getTeamScore(data, false), homeWinner = homeScore > awayScore;
 
         if (pickHome != null) {
-            if (pickHome === true) homeClass = homeClass + " pick";
-            else awayClass = awayClass + " pick";
+            if (pickHome === true) {
+                homeClass = homeClass + " pick";
+               if (props.end) awayClass = awayClass + " noPick";
+            }
+            else {
+                awayClass = awayClass + " pick";
+                if (props.end) homeClass = homeClass + " noPick";
+            }
         }
 
         if (props.end) {
             awayRecord = awayScore;
             homeRecord = homeScore;
-            if (homeWinner && pickHome) homeClass = homeClass + " winner noHover--pick";
-            else if (!homeWinner && !pickHome) awayClass = awayClass + " winner noHover--pick";
-            else if (homeWinner && !pickHome) awayClass = awayClass + " loser noHover--nonPick";
-            else if (!homeWinner && pickHome) homeClass = homeClass + " loser noHover-nonPick";
+            if (homeWinner && pickHome) homeClass = homeClass + " winner";
+            else if (!homeWinner && !pickHome) awayClass = awayClass + " winner";
+            else if (homeWinner && !pickHome) awayClass = awayClass + " loser";
+            else if (!homeWinner && pickHome) homeClass = homeClass + " loser";
         }
 
         display = (

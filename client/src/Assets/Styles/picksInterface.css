@@ -154,12 +154,8 @@ a {
   border: #ff3b3b 3px solid;
 }
 
-.noHover--pick:hover {
-  background-color: #3B80FF;
-}
-
-.noHover--nonPick:hover {
-  background-color: #FFFFFF;
+.noPick {
+  pointer-events: none;
 }
 
 @media (max-width: 991.98px) {
