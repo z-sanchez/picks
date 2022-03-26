@@ -162,10 +162,9 @@ export function calculateUserScore(year, week) {
             let data = getGameDataFromCache(year, week, weekGames[i].gameID),
                 homeWinner = getTeamScore(data, true) > getTeamScore(data, false);
 
+            console.log(homeWinner + ":" + getPickFromUserCache(year, week, weekGames[i].gameID));
 
-            if (homeWinner === getPickFromUserCache(year, week, weekGames[i].gameID).homePick) {
-                ++wins;
-            } else if (!homeWinner === !getPickFromUserCache(year, week, weekGames[i].gameID).homePick) {
+            if (homeWinner === getPickFromUserCache(year, week, weekGames[i].gameID)) {
                 ++wins;
             } else {
                 ++losses;
