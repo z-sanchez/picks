@@ -25,7 +25,6 @@ const GameData = (props) => {
         if (data !== null) return;
 
         if (doesGameDataExist(props.year, props.week, props.id) === false) {
-            console.log('games retrieved from fetch');
             await getGameStats(props.id, abortSignal).then((gameData) => {
                 setData(gameData);
             }).then(() => {
@@ -34,7 +33,6 @@ const GameData = (props) => {
                 console.log("fetch aborted in GameData");
             });
         } else {
-            console.log('games retrieved from cache for week: ' + props.week);
             if (doesUserPickExistInCache(props.year, props.week, props.id)) setHomePick(getPickFromUserCache(props.year, props.week, props.id));
             setData(getGameDataFromCache(props.year, props.week, props.id));
         }

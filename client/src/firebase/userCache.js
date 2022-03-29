@@ -88,17 +88,12 @@ export function validPicks(year, week, games) {
     let gameArray = userCache[userCache.findIndex(findYear)].array;
     gameArray = gameArray[gameArray.findIndex(findWeek)].games;
 
-    console.log(gameArray.length);
-    console.log(games.length);
-
     return gameArray.length === games.length;
 }
 
 //loads user data from database into cache
 export async function setUserCache(cache) {
     userCache = await cache;
-    console.log("user's cache:");
-    console.log(userCache);
 }
 
 //returns userCache to database and marks it being submitted to database. Only happens when picks are made has happened
@@ -149,7 +144,7 @@ export function calculateUserScore(year, week) {
     const findYear = (object) => object.year === year;
     const findWeek = (object) => object.week === week;
 
-    if (!isWeekFinished()) {
+    if (!isWeekFinished(year, week)) {
         let gameCache = getGameCache();
         let weekArray = gameCache[gameCache.findIndex(findYear)].array;
         weekArray = weekArray[weekArray.findIndex(findWeek)];
@@ -161,8 +156,6 @@ export function calculateUserScore(year, week) {
             //compare homePick to winner increment appropriate variable
             let data = getGameDataFromCache(year, week, weekGames[i].gameID),
                 homeWinner = getTeamScore(data, true) > getTeamScore(data, false);
-
-            console.log(homeWinner + ":" + getPickFromUserCache(year, week, weekGames[i].gameID));
 
             if (homeWinner === getPickFromUserCache(year, week, weekGames[i].gameID)) {
                 ++wins;

@@ -13,54 +13,60 @@ function PicksInterface() {
 
     const context = useContext(userContext);
     const [user, setUser] = useState(context.user);
-    const [games, setGames] = useState([]);
     const [week, setWeek] = useState(1);
     const [year, setYear] = useState(2021);
-    const [endOfWeek, setEndOfWeek] = useState(false);
+    const [gameObject, setGameObject] = useState({games: [], endOfWeek: false});
+
+    async function fetchGames() {
+        if (doesExist(year, week) === false) {
+            await findWeeksGames(week, year)
+                .then((gamesFound) => {
+                    updateCache(year, week, gamesFound);
+                    setGameObject({
+                        games: gamesFound,
+                        endOfWeek: isWeekFinished(year, week),
+                    });
+                })
+                .catch((message) => {
+                    console.log("fetch aborted in PicksInterface: " + message);
+                });
+        } else if (gameObject.games.length === 0) { //check if games haven't been picked from cache already
+            setGameObject({
+                games: getData(year, week),
+                endOfWeek: isWeekFinished(year, week),
+            });
+        } else if (getData(year, week)[0] !== gameObject.games[0]) { //if state holds cache value from different week
+            setGameObject({
+                games: getData(year, week),
+                endOfWeek: isWeekFinished(year, week),
+            });
+        }
+    }
+
 
     useEffect(() => {
-        setEndOfWeek(isWeekFinished(year, week));
-
-        async function fetchGames() {
-            if (doesExist(year, week) === false) {
-                await findWeeksGames(week, year)
-                    .then((gamesFound) => {
-                        updateCache(year, week, gamesFound);
-                        setGames(gamesFound);
-                    })
-                    .catch((message) => {
-                        console.log("fetch aborted in PicksInterface");
-                    });
-            } else if (games.length === 0) { //check if games haven't been picked from cache already
-                setGames(getData(year, week));
-            } else if (getData(year, week)[0] !== games[0]) { //if state holds cache value from different week
-                setGames(getData(year, week));
-            }
-        }
-
         if (user !== context.user) {
             setUser(context.user);
         }
 
-        if (games.length === 0) fetchGames();
-    }, [user, games.length, games, week, year, context.user]);
+        fetchGames();
+
+    }, [user, context.user, fetchGames]);
 
 
     function updateWeek(forward) {
         if (forward && week + 1 > 18) return null;
         else if (!forward && week - 1 < 1) return null;
         else if (forward) {
-            setGames([]);
             setWeek(week + 1);
         } else {
-            setGames([]);
             setWeek(week - 1);
         }
     }
 
     function handleSubmit() {
         //alert for no pick, match games added to cache to amount of games in week data, if descrepency abort function with alert
-        if (!validPicks(year, week, games)) {
+        if (!validPicks(year, week, gameObject.games)) {
             alert("Missing picks");
             return
         }
@@ -68,24 +74,24 @@ function PicksInterface() {
         calculateUserScore(year, week);
         submitUserPicks(context.user, year, week);
         advanceWeekPrompt();
-        setEndOfWeek(true);
     }
 
     function renderGames() {
 
         let submitButton = (<button key={uniqid()} className="buttons mx-2 my-5 mx-lg-5" id="submitButton"
                                     onClick={handleSubmit}>Submit Picks</button>);
-        if (endOfWeek) submitButton = null;
-        if (games.length !== 0) {
-            return [games.map((game) => {
-                return <GameData id={game} week={week} year={year} end={endOfWeek} key={uniqid()}/>
+        if (gameObject.endOfWeek) submitButton = null;
+
+        if (gameObject.games.length !== 0) {
+            return [gameObject.games.map((game) => {
+                return <GameData id={game} week={week} year={year} end={gameObject.endOfWeek} key={uniqid()}/>
             }), submitButton];
         } else return null;
     }
 
 
     let score = null;
-    if (endOfWeek) score = (<h1 className="text-center">{"Your Score: " + getScoreFromUserCache(year, week)}</h1>);
+    if (gameObject.endOfWeek) score = (<h1 className="text-center">{"Your Score: " + getScoreFromUserCache(year, week)}</h1>);
 
 
     return (
@@ -109,7 +115,6 @@ function PicksInterface() {
 }
 
 export default PicksInterface;
-
 
 
 

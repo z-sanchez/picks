@@ -1,13 +1,10 @@
 const axios = require('axios').default;
-let weekController = new AbortController();
 
 
 //given a week returns all gameIDs within that week
 export async function findWeeksGames(week, year) {
     // eslint-disable-next-line no-useless-concat
-    weekController.abort();
-    weekController = new AbortController();
-    const gameLinks = await axios.get(("https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/" + year + "/types/2/weeks/" + week + "/events/"), {signal: weekController.signal})
+    const gameLinks = await axios.get("https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/" + year + "/types/2/weeks/" + week + "/events/")
         .then(result => result.data.items);
 
     let games = [];
