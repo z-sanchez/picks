@@ -71,8 +71,8 @@ function PicksInterface() {
             return
         }
         endWeek(year, week); //this should be moved after demo. This method is responsible for ending entire week in real time
-        calculateUserScore(year, week);
         submitUserPicks(context.user, year, week);
+        setGameObject({games: gameObject.games, endOfWeek: true});
         advanceWeekPrompt();
     }
 
