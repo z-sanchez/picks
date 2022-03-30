@@ -52,7 +52,7 @@ h5 {
   background-color: #EAEEFF;
 }
 
-.graphic__background, form {
+.graphic__background, #loginForm {
   height: 65%;
   min-height: 330px;
 }
@@ -86,17 +86,17 @@ h5 {
   width: 50%;
 }
 
-form {
+#loginForm {
   background-color: #FFFFFF;
   border-radius: 0 1vh 1vh 0;
   box-shadow: 3px 5px 8px rgba(147, 147, 147, 0.47);
 }
-form label {
+#loginForm label {
   margin-bottom: 2%;
   color: #6c6c6c;
   font-size: 0.8vw;
 }
-form input {
+#loginForm input {
   width: 75%;
   height: 10%;
   border-style: none;
@@ -105,7 +105,7 @@ form input {
   padding-left: 1vw;
   font-size: 0.8vw;
 }
-form input:focus {
+#loginForm input:focus {
   padding-left: 1vw;
   outline: none;
   font-size: 0.8vw;
@@ -126,7 +126,7 @@ form input:focus {
 }
 
 @media (max-width: 991.98px) {
-  .graphic__background, form {
+  .graphic__background, #loginForm {
     border-radius: 0;
     min-height: 0;
   }
@@ -143,17 +143,17 @@ form input:focus {
     font-size: 10vw;
   }
 
-  form {
+  #loginForm {
     height: 70%;
   }
-  form label, form input {
+  #loginForm label, #loginForm input {
     font-size: 3vw;
     width: 90%;
   }
-  form input {
+  #loginForm input {
     padding-left: 2vw;
   }
-  form input:focus {
+  #loginForm input:focus {
     font-size: 3vw;
     padding-left: 2vw;
   }

@@ -31,6 +31,7 @@ export async function createUserWithEmail(email, password) {
         email: email,
         password: password,
         picks: "[]",
+        groups: [],
     };
     const database = getFirestore(firebase);
     const usersRef = doc(database, "users", email);
@@ -70,4 +71,83 @@ export async function submitUserPicks(username, year, week) { //pass year and we
     const data = {picks: JSON.stringify(getUserCache(year, week))};
 
     await updateDoc(docRef, data);
+}
+
+
+function createGroup(groupName) {
+    const database = getFirestore(firebase);
+    const groupsRef = doc(database, "groups", groupName);
+
+    const userDoc = {
+        members: [],
+        name: groupName,
+    }
+
+    setDoc(groupsRef, userDoc);
+}
+
+async function addUserToGroup(user, group, groupName) {
+
+    //adding user to group
+    if (group.members.includes(user)) {
+        console.log("already in group");
+        return; //if user already in group
+    }
+
+    group.members.push(user);
+    let newGroup = group;
+
+    const database = getFirestore(firebase);
+    const groupsRef = doc(database, "groups", groupName);
+
+    setDoc(groupsRef, newGroup);
+
+
+    //adding group to user data
+    const docRef = doc(database, "users", user);
+    const docSnap = await getDoc(docRef);
+
+    let newUserData = docSnap.data();
+    newUserData.groups.push(groupName);
+
+    setDoc(docRef, newUserData);
+}
+
+
+export async function addGroup(groupName, user) {
+    const database = getFirestore(firebase);
+    const groupsRef = doc(database, "groups", groupName);
+    const docSnap = await getDoc(groupsRef);
+
+    if (docSnap.exists()) {
+        addUserToGroup(user, docSnap.data(), groupName);
+    } else {
+        createGroup(groupName);
+        await addGroup(groupName, user);
+    }
+}
+
+export async function getUsersGroups(user) {
+    const database = getFirestore(firebase);
+    const userDataRef = doc(database, "users", user);
+    const docSnap = await getDoc(userDataRef);
+
+    let userData = docSnap.data();
+    userData = userData.groups;
+
+    for (let i = 0; i < userData.length; i++) {
+        userData[i] = await getGroup(userData[i]);
+    }
+
+    console.log(userData);
+    return userData;
+}
+
+async function getGroup(groupName) {
+    const database = getFirestore(firebase);
+    const groupsRef = doc(database, "groups", groupName);
+    const docSnap = await getDoc(groupsRef);
+
+    return docSnap.data();
+
 }

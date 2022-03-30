@@ -3,6 +3,29 @@
 .groupContainer
   width: 80%
 
+#addGroupForm
+  width: 100%
+  button
+    padding: .7vh 2vw
+    margin: 0 2% 2% 0
+    color: #FFFFFF
+    background-color: $primary
+    border-radius: .5vh
+    border-style: none
+    box-shadow: 3px 3px 8px rgba(100, 100, 100, 0.47)
+    font-size: $smallText
+    text-align: center
+  input
+    width: 15%
+    border-style: none
+    border-radius: 1vh
+    box-shadow: 3px 3px 8px rgba(100, 100, 100, 0.47)
+    padding: .7vh 1vw
+    font-size: $smallText
+  input:focus
+    padding-left: 1vw
+    outline: none
+    font-size: $smallText
 
 
 .groupBox
@@ -25,12 +48,23 @@
 
 
 @media (max-width: 991.98px)
- .groupContainer
-  width: 95%
+  #addGroupForm
+    button
+      font-size: 3vw
+    input
+      width: 40%
+      font-size: 3vw
+    input:focus
+      font-size: 3vw
 
- .groupMember
-  p
-    margin: 0 auto
-    font-size: 3vw
-  button
-    width: 30%
+
+
+  .groupContainer
+    width: 95%
+
+  .groupMember
+    p
+      margin: 0 auto
+      font-size: 3vw
+    button
+      width: 30%

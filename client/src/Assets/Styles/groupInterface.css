@@ -47,6 +47,34 @@ h5 {
   width: 80%;
 }
 
+#addGroupForm {
+  width: 100%;
+}
+#addGroupForm button {
+  padding: 0.7vh 2vw;
+  margin: 0 2% 2% 0;
+  color: #FFFFFF;
+  background-color: #3B80FF;
+  border-radius: 0.5vh;
+  border-style: none;
+  box-shadow: 3px 3px 8px rgba(100, 100, 100, 0.47);
+  font-size: 0.8vw;
+  text-align: center;
+}
+#addGroupForm input {
+  width: 15%;
+  border-style: none;
+  border-radius: 1vh;
+  box-shadow: 3px 3px 8px rgba(100, 100, 100, 0.47);
+  padding: 0.7vh 1vw;
+  font-size: 0.8vw;
+}
+#addGroupForm input:focus {
+  padding-left: 1vw;
+  outline: none;
+  font-size: 0.8vw;
+}
+
 .groupBox {
   width: 100%;
   background-color: #FFFFFF;
@@ -68,6 +96,17 @@ h5 {
 }
 
 @media (max-width: 991.98px) {
+  #addGroupForm button {
+    font-size: 3vw;
+  }
+  #addGroupForm input {
+    width: 40%;
+    font-size: 3vw;
+  }
+  #addGroupForm input:focus {
+    font-size: 3vw;
+  }
+
   .groupContainer {
     width: 95%;
   }

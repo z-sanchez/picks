@@ -6,7 +6,7 @@ import {updateCache, doesExist, getData} from "../Api/apiCache";
 import uniqid from 'uniqid';
 import userContext from "../utilities/UserContext";
 import {advanceWeekPrompt} from "../utilities/domManipulators";
-import {calculateUserScore, getScoreFromUserCache, isWeekFinished, validPicks} from "../firebase/userCache";
+import {getScoreFromUserCache, isWeekFinished, validPicks} from "../firebase/userCache";
 import {endWeek} from "../firebase/userCache";
 
 function PicksInterface() {

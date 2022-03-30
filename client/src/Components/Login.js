@@ -45,7 +45,7 @@ const Login = (props) => {
                         <img src={graphic}  id="footballGraphic" alt="football player graphic"/>
                         <button className="buttons" onClick={() => {changeForm();}}>Sign Up</button>
                     </div>
-                    <form className="col-lg-5 px-4 px-lg-5 d-flex flex-column justify-content-start">
+                    <form id="loginForm" className="col-lg-5 px-4 px-lg-5 d-flex flex-column justify-content-start">
                         <div id="loginStatus__header" className="d-flex align-items-center justify-content-between">
                             <h1 id="login__header">Login</h1>
                             <p id="login__status" className="text-center px-2 py-1">Invalid email or password</p>
