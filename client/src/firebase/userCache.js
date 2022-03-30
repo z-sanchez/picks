@@ -52,7 +52,6 @@ export function getPickFromUserCache(year, week, gameID) {
     const findWeek = (object) => object.week === week;
     const findGame = (object) => object.gameID === gameID;
 
-    console.log(year, week, gameID); //this is a result from a week earlier than submitted, problem in calculate
     let game = userCache[userCache.findIndex(findYear)].array;
     game = game[game.findIndex(findWeek)].games;
     return game[game.findIndex(findGame)].homePick;
@@ -150,10 +149,6 @@ export function calculateUserScore(year, week) {
         let weekArray = gameCache[gameCache.findIndex(findYear)].array;
         weekArray = weekArray[weekArray.findIndex(findWeek)];
         let weekGames = weekArray.games;
-
-        console.log(weekArray);
-        console.log(userCache);
-        console.log(year, week);
 
         for (let i = 0; i < weekGames.length; i++) {
             //find winner using parser functions

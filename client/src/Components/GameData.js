@@ -1,17 +1,15 @@
-import React, {useContext} from "react";
+import React from "react";
 import {useState, useEffect} from "react";
 import {getGameStats} from "../Api/sportsDataAPI";
 import {getTeamName, getTeamRecord, getGameLink, getGameTime, getTeamScore} from "../Api/parsers";
 import {doesUserPickExistInCache, getPickFromUserCache, updateUserCache} from "../firebase/userCache";
 import {doesGameDataExist, getGameDataFromCache, updateGameCache} from "../Api/apiCache";
-import UserContext from "../utilities/UserContext";
 
 
 const GameData = (props) => {
 
     const [data, setData] = useState(null);
     const [pickHome, setHomePick] = useState(null);
-    const context = useContext(UserContext);
 
 
     function pickTeam(home) {
@@ -22,13 +20,13 @@ const GameData = (props) => {
 
 
     async function getGameData(abortSignal) {
-        if (data !== null) return;
-
         if (doesGameDataExist(props.year, props.week, props.id) === false) {
             await getGameStats(props.id, abortSignal).then((gameData) => {
-                setData(gameData);
-            }).then(() => {
+                updateGameCache(props.year, props.week, props.id, gameData);
+                return gameData
+            }).then((gameData) => {
                 if (doesUserPickExistInCache(props.year, props.week, props.id)) setHomePick(getPickFromUserCache(props.year, props.week, props.id));
+                setData(gameData);
             }).catch((message) => {
                 console.log("fetch aborted in GameData");
             });
@@ -41,11 +39,16 @@ const GameData = (props) => {
 
     useEffect(() => {
         let gameController = new AbortController();
-        getGameData(gameController.signal);
-        return function abort() {
-            if (data !== null && !doesGameDataExist(props.year, props.week, props.id)) updateGameCache(props.year, props.week, props.id, data);
+
+        if (data === null) {
+            getGameData(gameController.signal);
+        }
+
+        function cleanUp() {
             gameController.abort();
         }
+
+        return cleanUp;
     });
 
 
@@ -55,14 +58,14 @@ const GameData = (props) => {
         let awayName = getTeamName(data, false), homeName = getTeamName(data, true),
             awayRecord = getTeamRecord(data, false), homeRecord = getTeamRecord(data, true),
             gameTime = getGameTime(data), gameLink = getGameLink(data), awayClass = 'game__away',
-            homeClass = 'game__home', homeScore = getTeamScore(data, true), awayScore = getTeamScore(data, false), homeWinner = homeScore > awayScore;
+            homeClass = 'game__home', homeScore = getTeamScore(data, true), awayScore = getTeamScore(data, false),
+            homeWinner = homeScore > awayScore;
 
         if (pickHome != null) {
             if (pickHome === true) {
                 homeClass = homeClass + " pick";
-               if (props.end) awayClass = awayClass + " noPick";
-            }
-            else {
+                if (props.end) awayClass = awayClass + " noPick";
+            } else {
                 awayClass = awayClass + " pick";
                 if (props.end) homeClass = homeClass + " noPick";
             }
