@@ -48,11 +48,11 @@ h5 {
 }
 
 #addGroupForm {
-  width: 100%;
+  width: 50%;
 }
 #addGroupForm button {
   padding: 0.7vh 2vw;
-  margin: 0 2% 2% 0;
+  margin: 0 0 2% 2%;
   color: #FFFFFF;
   background-color: #3B80FF;
   border-radius: 0.5vh;
@@ -62,7 +62,7 @@ h5 {
   text-align: center;
 }
 #addGroupForm input {
-  width: 15%;
+  width: 60%;
   border-style: none;
   border-radius: 1vh;
   box-shadow: 3px 3px 8px rgba(100, 100, 100, 0.47);
@@ -76,7 +76,7 @@ h5 {
 }
 
 .groupBox {
-  width: 100%;
+  width: 80%;
   background-color: #FFFFFF;
   box-shadow: 0 3px 5px rgba(129, 129, 129, 0.47);
   border-radius: 1vh;
@@ -88,7 +88,6 @@ h5 {
   font-size: 1.2vw;
   font-weight: bold;
   text-align: center;
-  width: 10%;
   overflow-x: hidden;
 }
 .groupMember button {
@@ -96,11 +95,14 @@ h5 {
 }
 
 @media (max-width: 991.98px) {
+  #addGroupForm {
+    width: 60%;
+  }
   #addGroupForm button {
     font-size: 3vw;
   }
   #addGroupForm input {
-    width: 40%;
+    width: 60%;
     font-size: 3vw;
   }
   #addGroupForm input:focus {
@@ -108,7 +110,11 @@ h5 {
   }
 
   .groupContainer {
-    width: 95%;
+    width: 100%;
+  }
+
+  .groupBox {
+    width: 90%;
   }
 
   .groupMember p {

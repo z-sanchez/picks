@@ -72,19 +72,23 @@ function PicksInterface() {
     }
 
     function renderGames() {
-        let submitButton = (<button key={uniqid()} className="buttons mx-2 my-5 mx-lg-5" id="submitButton" onClick={handleSubmit}>Submit Picks</button>);
+        let submitButton = (
+            <button key={uniqid()} className="buttons mx-2 my-5 mx-lg-5" id="submitButton" onClick={handleSubmit}>Submit
+                Picks</button>);
         if (gameObject.endOfWeek) submitButton = null;
 
         if (gameObject.games.length !== 0) {
             return [gameObject.games.map((game) => {
-                return <GameData id={game} week={gameObject.week} year={year} end={gameObject.endOfWeek} key={uniqid()}/>
+                return <GameData id={game} week={gameObject.week} year={year} end={gameObject.endOfWeek}
+                                 key={uniqid()}/>
             }), submitButton];
         } else return null;
     }
 
 
     let score = null;
-    if (gameObject.endOfWeek) score = (<h1 className="text-center">{"Your Score: " + getScoreFromUserCache(year, gameObject.week)}</h1>);
+    if (gameObject.endOfWeek) score = (
+        <h1 className="text-center">{"Your Score: " + getScoreFromUserCache(year, gameObject.week)}</h1>);
 
 
     return (
@@ -92,7 +96,7 @@ function PicksInterface() {
             <div id="pageHeader"
                  className="align-self-start w-100 px-2 my-5 d-flex flex-column flex-lg-row justify-content-between">
                 <div className="d-flex flex-column">
-                    <h1 onClick={signOutApp}>{year + " WEEK " + gameObject.week}</h1>
+                    <h1 onClick={signOutApp}>{context.user + "'s WEEK " + gameObject.week + " PICKS"}</h1>
                     <div className="textBar"/>
                 </div>
                 <div className="d-flex mt-5 mt-lg-0 justify-content-center align-items-center align-self-lg-end">

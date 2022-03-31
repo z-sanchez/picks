@@ -4,10 +4,10 @@
   width: 80%
 
 #addGroupForm
-  width: 100%
+  width: 50%
   button
     padding: .7vh 2vw
-    margin: 0 2% 2% 0
+    margin: 0 0 2% 2%
     color: #FFFFFF
     background-color: $primary
     border-radius: .5vh
@@ -16,7 +16,7 @@
     font-size: $smallText
     text-align: center
   input
-    width: 15%
+    width: 60%
     border-style: none
     border-radius: 1vh
     box-shadow: 3px 3px 8px rgba(100, 100, 100, 0.47)
@@ -29,7 +29,7 @@
 
 
 .groupBox
-  width: 100%
+  width: 80%
   background-color: #FFFFFF
   box-shadow: 0 3px 5px rgba(129, 129, 129, 0.47)
   border-radius: 1vh
@@ -41,7 +41,6 @@
     font-size: $medText
     font-weight: bold
     text-align: center
-    width: 10%
     overflow-x: hidden
   button
     margin: 0
@@ -49,10 +48,11 @@
 
 @media (max-width: 991.98px)
   #addGroupForm
+    width: 60%
     button
       font-size: 3vw
     input
-      width: 40%
+      width: 60%
       font-size: 3vw
     input:focus
       font-size: 3vw
@@ -60,7 +60,11 @@
 
 
   .groupContainer
-    width: 95%
+    width: 100%
+
+
+  .groupBox
+    width: 90%
 
   .groupMember
     p

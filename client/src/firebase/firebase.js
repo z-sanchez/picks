@@ -138,8 +138,7 @@ export async function getUsersGroups(user) {
     for (let i = 0; i < userData.length; i++) {
         userData[i] = await getGroup(userData[i]);
     }
-
-    console.log(userData);
+    
     return userData;
 }
 

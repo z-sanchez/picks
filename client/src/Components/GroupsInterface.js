@@ -1,12 +1,25 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import userContext from "../utilities/UserContext";
+import {useNavigate} from 'react-router-dom';
 import {addGroup, getUsersGroups} from "../firebase/firebase";
+import uniqid from "uniqid";
+import {getStats} from "../utilities/userDataCalculator";
 
 function GroupsInterface() {
 
     const context = useContext(userContext);
-    const [groups, setGroups] = useState(null);
+    const navigate = useNavigate();
+    const [groups, setGroups] = useState([]);
 
+    useEffect(() => {
+        async function getGroups() {
+            let groups = await getUsersGroups(context.currentUser);
+            setGroups(groups);
+        }
+
+        getGroups();
+
+    }, [context.currentUser, context.user]);
 
     async function handleAdd() {
         const groupName = document.getElementById('groupInput').value;
@@ -18,6 +31,60 @@ function GroupsInterface() {
         }
     }
 
+    async function displayUserStats(username) {
+        return await getStats(username).then((stats) => {
+            return stats.wins + "-" + stats.losses
+        });
+    }
+
+
+    async function renderMember(member) {
+        let score = await displayUserStats(member);
+        return (
+            <div key={uniqid()}
+                 className="groupMember my-3 d-flex justify-content-between align-items-center">
+                <p className="groupMember__ranking ps-2 mx-2 mx-lg-5 mb-0">{score}
+                </p>
+                <p className="groupMember__name mx-2 mx-lg-5 mb-0">{member}</p>
+                <button className="buttons groupMember__picks mx-2  mx-lg-5">Profile
+                </button>
+            </div>
+        )
+    }
+
+
+    function renderGroup(index) {
+
+        let members = [];
+
+        for (let i = 0; i < groups[index].members.length; i++){
+            members.push(renderMember(groups[index].members[i]));
+        }
+
+           return (<div key={uniqid()}
+                     className="groupContainer align-self-center py-5 d-flex flex-column align-items-center">
+                    <h1 className="w-100 mb-3 px-2">{groups[index].name}</h1>
+                    <div className="groupBox">
+                        {members}
+                    </div>
+                </div>);
+
+
+    }
+
+
+    function renderGroups() {
+        let groupsToBeRendered = [];
+
+        for (let i = 0; i < groups.length; i++) {
+            groupsToBeRendered.push(renderGroup(i));
+        }
+
+        return groupsToBeRendered;
+    }
+
+    let groupsRender = renderGroups();
+
     return (
         <div className="col-lg-11 order-1 order-lg-2 d-flex flex-column align-items-center" id="contentWrapper">
             <div id="pageHeader" className="align-self-start px-2 mt-5">
@@ -25,25 +92,16 @@ function GroupsInterface() {
                 <div className="textBar"/>
             </div>
 
-            <form id="addGroupForm" className="align-self-start px-2 mt-5">
-                <button className="mt-3" onClick={(e) => {e.preventDefault(); handleAdd()}}>
+            <form id="addGroupForm" className="align-self-center px-2 mt-5">
+                <input type="text" id="groupInput" placeholder={"Enter Group Name"}/>
+                <button className="mt-3" onClick={(e) => {
+                    e.preventDefault();
+                    handleAdd();
+                }}>
                     Add Group
                 </button>
-                <input type="text" id="groupInput" placeholder={"Enter Group Name"}/>
             </form>
-
-            <div className="groupContainer align-self-center py-5 d-flex flex-column align-items-center">
-                <h1 className="w-100 mb-3">Sanchez</h1>
-                <div className="groupBox">
-
-                    <div className="groupMember my-3 d-flex justify-content-center align-items-center">
-                        <p className="groupMember__ranking mx-2 mx-lg-5">1st</p>
-                        <p className="groupMember__name mx-2 mx-lg-5">Ziek</p>
-                        <button className="buttons groupMember__stats  mx-2 mx-lg-5">Stats</button>
-                        <button className="buttons groupMember__picks mx-2 mx-lg-5">Picks</button>
-                    </div>
-                </div>
-            </div>
+            {groupsRender}
         </div>
     )
 }

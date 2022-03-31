@@ -109,7 +109,6 @@ export async function updateGameCache(year, week, gameID, data) {
     }
 
     await update();
-    console.log(gameCache);
 }
 
 export function getGameCache() {

@@ -25,6 +25,7 @@ const AppInterface = (props) => {
             <UserContext.Provider value={{
                 user: showUser,
                 updateUser: updateUser,
+                currentUser: props.user
             }}>
                 <div className="container-fluid" id="appWrapper">
                     <div className="row flex-row content__height">
