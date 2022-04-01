@@ -75,7 +75,7 @@ function PicksInterface() {
         let submitButton = (
             <button key={uniqid()} className="buttons mx-2 my-5 mx-lg-5" id="submitButton" onClick={handleSubmit}>Submit
                 Picks</button>);
-        if (gameObject.endOfWeek) submitButton = null;
+        if (gameObject.endOfWeek || context.user !== context.currentUser) submitButton = null;
 
         if (gameObject.games.length !== 0) {
             return [gameObject.games.map((game) => {
@@ -88,22 +88,29 @@ function PicksInterface() {
 
     let score = null;
     if (gameObject.endOfWeek) score = (
-        <h1 className="text-center">{"Your Score: " + getScoreFromUserCache(year, gameObject.week)}</h1>);
+        <h1 className="text-center my-3">{"Your Score: " + getScoreFromUserCache(year, gameObject.week)}</h1>);
+
+    let backToMainUser = null;
+    if (context.user !== context.currentUser) backToMainUser = (<p className="headerNav__item" onClick={() => {context.updateUser(context.currentUser)}}>Back to Main User</p>);
 
 
     return (
         <div className="col-lg-11 order-1 order-lg-2 d-flex flex-column align-items-center" id="contentWrapper">
             <div id="pageHeader"
                  className="align-self-start w-100 px-2 my-5 d-flex flex-column flex-lg-row justify-content-between">
+                <div className="d-flex flex-row headerNav">
+                    <p className="headerNav__item" onClick={signOutApp}>Sign Out</p>
+                    {backToMainUser}
+                </div>
                 <div className="d-flex flex-column">
-                    <h1 onClick={signOutApp}>{context.user + "'s WEEK " + gameObject.week + " PICKS"}</h1>
+                    <h1>{context.user + "'s WEEK " + gameObject.week + " PICKS"}</h1>
                     <div className="textBar"/>
                 </div>
-                <div className="d-flex mt-5 mt-lg-0 justify-content-center align-items-center align-self-lg-end">
-                    <button className="buttons m-0 mx-2" onClick={() => updateWeek(false)}>Previous Week
-                    </button>
-                    <button className="buttons m-0 mx-2" onClick={() => updateWeek(true)}>Next Week</button>
-                </div>
+            </div>
+            <div className="d-flex mb-5 justify-content-center align-items-center">
+                <button className="buttons m-0 mx-2" onClick={() => updateWeek(false)}>Previous Week
+                </button>
+                <button className="buttons m-0 mx-2" onClick={() => updateWeek(true)}>Next Week</button>
             </div>
             {score}
             {renderGames()}

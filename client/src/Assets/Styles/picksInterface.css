@@ -43,6 +43,27 @@ h5 {
   background-color: #3B80FF;
 }
 
+.headerNav {
+  width: 50%;
+}
+
+.headerNav__item {
+  padding-right: 5%;
+  width: fit-content;
+  cursor: pointer;
+  font-size: 0.8vw;
+  color: #508bfa;
+}
+
+.headerNav__item:hover {
+  color: #3B80FF;
+}
+
+@media (max-width: 991.98px) {
+  .headerNav__item {
+    font-size: 3vw;
+  }
+}
 .content__height {
   height: 100%;
 }
@@ -58,9 +79,12 @@ h5 {
   overflow-y: scroll;
 }
 #contentWrapper .textBar {
-  width: 15%;
+  width: 10%;
 }
 
+#pageHeader {
+  width: 100%;
+}
 #pageHeader h1 {
   cursor: default;
   text-shadow: 0 3px 5px rgba(129, 129, 129, 0.47);
