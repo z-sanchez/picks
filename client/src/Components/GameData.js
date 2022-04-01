@@ -1,13 +1,15 @@
-import React from "react";
+import React, {useContext} from "react";
 import {useState, useEffect} from "react";
 import {getGameStats} from "../Api/sportsDataAPI";
 import {getTeamName, getTeamRecord, getGameLink, getGameTime, getTeamScore} from "../Api/parsers";
 import {doesUserPickExistInCache, getPickFromUserCache, updateUserCache} from "../firebase/userCache";
 import {doesGameDataExist, getGameDataFromCache, updateGameCache} from "../Api/apiCache";
+import userContext from "../utilities/UserContext";
 
 
 const GameData = (props) => {
 
+    const context = useContext(userContext);
     const [data, setData] = useState(null);
     const [pickHome, setHomePick] = useState(null);
 
@@ -78,6 +80,11 @@ const GameData = (props) => {
             else if (!homeWinner && !pickHome) awayClass = awayClass + " winner";
             else if (homeWinner && !pickHome) awayClass = awayClass + " loser";
             else if (!homeWinner && pickHome) homeClass = homeClass + " loser";
+        }
+
+        if (context.user !== context.currentUser) {
+            awayClass = awayClass + " noPick";
+            homeClass = homeClass + " noPick";
         }
 
         display = (
