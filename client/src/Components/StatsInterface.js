@@ -17,7 +17,10 @@ function StatsInterface() {
     stats();
 
     let backToMainUser = null;
-    if (context.user !== context.currentUser) backToMainUser = (<p className="headerNav__item" onClick={() => {context.updateUser(context.currentUser)}}>Back to Main User</p>);
+    if (context.user !== context.currentUser) {
+        backToMainUser = (<p className="headerNav__item" onClick={() => {context.updateUser(context.currentUser)}}>Back to Main User</p>);
+        statsObject.games = "";
+    }
 
     if(statsObject !== null) {
     return (
@@ -38,7 +41,6 @@ function StatsInterface() {
                 <p className="my-3">{"Games right: " + statsObject.wins}</p>
                 <p className="my-3">{"Games wrong: " + statsObject.losses}</p>
                 <p className="my-3">{"Correct Prediction Ratio: " + statsObject.ratio  + "%"}</p>
-                <p className="my-3">{"Group Weeks Won: " + statsObject.groupWeekWon}</p>
             </div>
         </div>
     )}
