@@ -6,9 +6,7 @@ import uniqid from "uniqid";
 import {getStats} from "../utilities/userDataCalculator";
 
 function GroupsInterface() {
-
     const context = useContext(userContext);
-    const navigate = useNavigate();
     const [groups, setGroups] = useState([]);
 
     useEffect(() => {
@@ -21,6 +19,7 @@ function GroupsInterface() {
 
     }, [context.currentUser, context.user]);
 
+
     async function handleAdd() {
         const groupName = document.getElementById('groupInput').value;
 
@@ -31,36 +30,14 @@ function GroupsInterface() {
         }
     }
 
-    async function displayUserStats(username) {
-        return await getStats(username).then((stats) => {
-            return stats.wins + "-" + stats.losses
-        });
-    }
-
-
-    async function renderMember(member) {
-        let score = await displayUserStats(member);
-        return (
-            <div key={uniqid()}
-                 className="groupMember my-3 d-flex justify-content-between align-items-center">
-                <p className="groupMember__ranking ps-2 mx-2 mx-lg-5 mb-0">{score}
-                </p>
-                <p className="groupMember__name mx-2 mx-lg-5 mb-0">{member}</p>
-                <button className="buttons groupMember__picks mx-2  mx-lg-5">Profile
-                </button>
-            </div>
-        )
-    }
-
 
     function renderGroup(index) {
 
         let members = [];
 
         for (let i = 0; i < groups[index].members.length; i++){
-            members.push(renderMember(groups[index].members[i]));
+            members.push(<GroupMember member={groups[index].members[i]}/>);
         }
-
            return (<div key={uniqid()}
                      className="groupContainer align-self-center py-5 d-flex flex-column align-items-center">
                     <h1 className="w-100 mb-3 px-2">{groups[index].name}</h1>
@@ -68,8 +45,6 @@ function GroupsInterface() {
                         {members}
                     </div>
                 </div>);
-
-
     }
 
 
@@ -83,7 +58,6 @@ function GroupsInterface() {
         return groupsToBeRendered;
     }
 
-    let groupsRender = renderGroups();
 
     return (
         <div className="col-lg-11 order-1 order-lg-2 d-flex flex-column align-items-center" id="contentWrapper">
@@ -101,10 +75,52 @@ function GroupsInterface() {
                     Add Group
                 </button>
             </form>
-            {groupsRender}
+            {renderGroups()}
         </div>
     )
 }
 
 
 export default GroupsInterface;
+
+
+
+
+
+
+
+
+
+const GroupMember = (props) => {
+    const context = useContext(userContext);
+    const navigate = useNavigate();
+
+    const [memberScore, setMemberScore] = useState(null);
+
+    useEffect(() => {
+
+        async function getData() {
+           let data = await getStats(props.member).then((stats) => {return stats.wins + "-" + stats.losses})
+           setMemberScore(data);
+        }
+
+        if (memberScore == null) getData();
+
+    }, [memberScore, props.member]);
+
+
+
+    if (memberScore === null) return null;
+    else {
+        return (
+            <div key={uniqid()}
+                 className="groupMember my-3 d-flex justify-content-between align-items-center">
+                <p className="groupMember__ranking ps-2 mx-2 mx-lg-5 mb-0">{memberScore}
+                </p>
+                <p className="groupMember__name mx-2 mx-lg-5 mb-0">{props.member}</p>
+                <button className="buttons groupMember__picks mx-2  mx-lg-5">Profile
+                </button>
+            </div>
+        )
+    }
+}
