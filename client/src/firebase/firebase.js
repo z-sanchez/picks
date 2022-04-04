@@ -120,7 +120,7 @@ export async function addGroup(groupName, user) {
     const docSnap = await getDoc(groupsRef);
 
     if (docSnap.exists()) {
-        addUserToGroup(user, docSnap.data(), groupName);
+        await addUserToGroup(user, docSnap.data(), groupName);
     } else {
         createGroup(groupName);
         await addGroup(groupName, user);

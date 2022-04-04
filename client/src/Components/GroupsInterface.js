@@ -24,7 +24,11 @@ function GroupsInterface() {
         let groupName = document.getElementById('groupInput').value;
 
         if (groupName !== "" || groupName !== null) {
-            await addGroup(groupName, context.user).then(() => {groupName = ""}).then(() => getUsersGroups(context.user).then((groups) => setGroups(groups)));
+            await addGroup(groupName, context.user).then(() => {
+                document.getElementById('groupInput').value = ""
+            }).then(() => {
+                return getUsersGroups(context.user)
+            }).then((groups) => setGroups(groups));
         }
     }
 
@@ -85,15 +89,6 @@ function GroupsInterface() {
 export default GroupsInterface;
 
 
-
-
-
-
-
-
-
-
-
 const GroupMember = (props) => {
     const context = useContext(userContext);
     const navigate = useNavigate();
@@ -121,7 +116,8 @@ const GroupMember = (props) => {
 
     if (memberScore === null) return null;
     else {
-        let button = (<button className="buttons groupMember__picks mx-2  mx-lg-5" onClick={handleClick}>Profile</button>);
+        let button = (
+            <button className="buttons groupMember__picks mx-2  mx-lg-5" onClick={handleClick}>Profile</button>);
         return (
             <div
                 className="groupMember my-3 d-flex justify-content-between align-items-center">
