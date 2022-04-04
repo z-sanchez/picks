@@ -21,12 +21,10 @@ function GroupsInterface() {
 
 
     async function handleAdd() {
-        const groupName = document.getElementById('groupInput').value;
+        let groupName = document.getElementById('groupInput').value;
 
         if (groupName !== "" || groupName !== null) {
-            addGroup(groupName, context.user);
-            let groups = await getUsersGroups(context.user);
-            setGroups(groups);
+            await addGroup(groupName, context.user).then(() => {groupName = ""}).then(() => getUsersGroups(context.user).then((groups) => setGroups(groups)));
         }
     }
 
@@ -124,7 +122,6 @@ const GroupMember = (props) => {
     if (memberScore === null) return null;
     else {
         let button = (<button className="buttons groupMember__picks mx-2  mx-lg-5" onClick={handleClick}>Profile</button>);
-        if (props.member === context.currentUser) button = null;
         return (
             <div
                 className="groupMember my-3 d-flex justify-content-between align-items-center">

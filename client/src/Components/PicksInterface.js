@@ -16,37 +16,38 @@ function PicksInterface() {
     const [year, setYear] = useState(2021);
     const [gameObject, setGameObject] = useState({games: [], endOfWeek: false, week: 1});
 
-    async function fetchGames() {
-        if (doesExist(year, gameObject.week) === false) {
-            await findWeeksGames(gameObject.week, year)
-                .then((gamesFound) => {
-                    updateCache(year, gameObject.week, gamesFound);
-                    setGameObject({
-                        games: gamesFound,
-                        endOfWeek: isWeekFinished(year, gameObject.week),
-                        week: gameObject.week
-                    });
-                })
-                .catch((message) => {
-                    console.log("fetch aborted in PicksInterface: " + message);
-                });
-        } else if (getData(year, gameObject.week)[0] !== gameObject.games[0]) { //if state holds cache value from different week
-            setGameObject({
-                games: getData(year, gameObject.week),
-                endOfWeek: isWeekFinished(year, gameObject.week),
-                week: gameObject.week,
-            });
-        }
-    }
 
     useEffect(() => {
         if (user !== context.user) {
             setUser(context.user);
         }
 
+        async function fetchGames() {
+            if (doesExist(year, gameObject.week) === false) {
+                await findWeeksGames(gameObject.week, year)
+                    .then((gamesFound) => {
+                        updateCache(year, gameObject.week, gamesFound);
+                        setGameObject({
+                            games: gamesFound,
+                            endOfWeek: isWeekFinished(year, gameObject.week),
+                            week: gameObject.week
+                        });
+                    })
+                    .catch((message) => {
+                        console.log("fetch aborted in PicksInterface: " + message);
+                    });
+            } else if (getData(year, gameObject.week)[0] !== gameObject.games[0]) { //if state holds cache value from different week
+                setGameObject({
+                    games: getData(year, gameObject.week),
+                    endOfWeek: isWeekFinished(year, gameObject.week),
+                    week: gameObject.week,
+                });
+            }
+        }
+
         fetchGames();
 
-    }, [user, context.user, fetchGames]);
+    }, [user, context.user, year, gameObject.week, gameObject.games]);
 
 
     function updateWeek(forward) {
