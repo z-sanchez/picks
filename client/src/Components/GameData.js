@@ -89,7 +89,7 @@ const GameData = (props) => {
 
         display = (
             <div className="game my-5 d-flex flex-column">
-                <div className={awayClass + " my-3 d-flex flex-column align-items-center justify-content-center"}
+                <div className={awayClass + " mb-3 d-flex flex-column align-items-center justify-content-center"}
                      onClick={() => pickTeam(false)}>
                     <h1>{awayName} </h1>
                     <p className="align-self-end">{awayRecord}</p>
@@ -101,7 +101,7 @@ const GameData = (props) => {
                     <p className="game__infoTimeDate">{gameTime}</p>
                 </div>
 
-                <div className={homeClass + " my-3 d-flex flex-column align-items-center justify-content-center"}
+                <div className={homeClass + " mt-3 d-flex flex-column align-items-center justify-content-center"}
                      onClick={() => pickTeam(true)}>
                     <h1>{homeName}</h1>
                     <p className="align-self-end">{homeRecord}</p>

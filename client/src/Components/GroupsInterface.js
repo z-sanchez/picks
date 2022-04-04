@@ -28,8 +28,7 @@ function GroupsInterface() {
                 document.getElementById('groupInput').value = ""
             }).then(() => {
                 return getUsersGroups(context.user)
-            }).then((groups) => setGroups(groups));
-        }
+            }).then((groups) => setGroups(groups)); }
     }
 
 

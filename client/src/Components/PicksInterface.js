@@ -74,7 +74,7 @@ function PicksInterface() {
 
     function renderGames() {
         let submitButton = (
-            <button key={uniqid()} className="buttons mx-2 my-5 mx-lg-5" id="submitButton" onClick={handleSubmit}>Submit
+            <button key={uniqid()} className="buttons mx-2 mb-5 mx-lg-5" id="submitButton" onClick={handleSubmit}>Submit
                 Picks</button>);
         if (gameObject.endOfWeek || context.user !== context.currentUser) submitButton = null;
 
@@ -108,7 +108,7 @@ function PicksInterface() {
                     <div className="textBar"/>
                 </div>
             </div>
-            <div className="d-flex mb-5 justify-content-center align-items-center">
+            <div className="d-flex justify-content-center align-items-center">
                 <button className="buttons m-0 mx-2" onClick={() => updateWeek(false)}>Previous Week
                 </button>
                 <button className="buttons m-0 mx-2" onClick={() => updateWeek(true)}>Next Week</button>
