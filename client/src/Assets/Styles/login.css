@@ -119,6 +119,7 @@ h5 {
   font-size: 0.8vw;
 }
 #loginForm input {
+  -webkit-appearance: none;
   width: 75%;
   height: 10%;
   border-style: none;

@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react";
+import Footer from '../layouts/Footer';
 import {useNavigate} from 'react-router-dom';
 import {prepForm, authStatus} from "../utilities/domManipulators";
 import {signInWithEmail, createUserWithEmail} from "../firebase/firebase";
@@ -58,6 +59,7 @@ const Login = (props) => {
                         </label>
                         <input type="text" id="password"/>
                         <button className="buttons mt-5 mt-lg-auto" onClick={(e) => {e.preventDefault(); handleSubmit()}}>Login</button>
+                        <Footer/>
                     </form>
                 </div>
             </div>
