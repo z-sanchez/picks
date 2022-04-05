@@ -70,6 +70,7 @@ h5 {
   margin-top: 6vh;
   border-radius: 1vh;
   box-shadow: 0 3px 5px rgba(129, 129, 129, 0.47);
+  animation: fadein 2s;
 }
 .statBox .textBar {
   width: 15%;
@@ -83,8 +84,17 @@ h5 {
   font-family: "Open Sans", serif;
   color: black;
   font-size: 1.2vw;
+  animation: fadein 4s;
 }
 
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 @media (max-width: 991.98px) {
   .statBox {
     width: 80%;

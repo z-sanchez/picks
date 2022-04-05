@@ -130,13 +130,13 @@ export async function addGroup(groupName, user) {
 export async function getUsersGroups(user) {
     const database = getFirestore(firebase);
     const userDataRef = doc(database, "users", user);
-    const docSnap = await getDoc(userDataRef);
+    const docSnap = await getDoc(userDataRef)
 
     let userData = docSnap.data();
     userData = userData.groups;
 
     for (let i = 0; i < userData.length; i++) {
-        userData[i] = await getGroup(userData[i]);
+        userData[i] = await getGroup(userData[i])
     }
     
     return userData;

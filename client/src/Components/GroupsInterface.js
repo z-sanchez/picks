@@ -11,24 +11,26 @@ function GroupsInterface() {
 
     useEffect(() => {
         async function getGroups() {
-            let groups = await getUsersGroups(context.currentUser);
+            let groups = await getUsersGroups(context.currentUser).catch(err => console.log("GroupsInterface component unmounted. No update needed"));
             setGroups(groups);
         }
 
         getGroups();
+
+        return () => setGroups([]);
 
     }, [context.currentUser, context.user]);
 
 
     async function handleAdd() {
         let groupName = document.getElementById('groupInput').value;
-
         if (groupName !== "" || groupName !== null) {
             await addGroup(groupName, context.user).then(() => {
                 document.getElementById('groupInput').value = ""
             }).then(() => {
-                return getUsersGroups(context.user)
-            }).then((groups) => setGroups(groups)); }
+                return getUsersGroups(context.user);
+            }).then((groups) => setGroups(groups))
+        }
     }
 
 
@@ -97,13 +99,13 @@ const GroupMember = (props) => {
     useEffect(() => {
 
         async function getData() {
-            let data = await getStats(props.member).then((stats) => {
+            await getStats(props.member).then((stats) => {
                 return stats.wins + "-" + stats.losses
-            })
-            setMemberScore(data);
+            }).then(data => setMemberScore(data))
         }
 
-        if (memberScore == null) getData();
+        getData();
+
 
     }, [memberScore, props.member]);
 

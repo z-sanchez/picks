@@ -1,6 +1,7 @@
 @import boilerPlate
 
 .groupContainer
+  animation: fadein 2s
   width: 80%
 
 #addGroupForm
@@ -33,6 +34,13 @@
   background-color: #FFFFFF
   box-shadow: 0 3px 5px rgba(129, 129, 129, 0.47)
   border-radius: 1vh
+  animation: fadein 3s
+
+@keyframes fadein
+  from
+    opacity: 0
+  to
+    opacity: 1
 
 
 .groupMember
