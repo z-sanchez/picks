@@ -26,9 +26,7 @@ const Login = (props) => {
         if (email == null || email === ""|| password == null || password === "") return;
 
         if (loggingIn) {
-            await signInWithEmail(email, password).then(() => {
-                console.log("logged in");
-            }).catch((err) => authStatus(true));
+            await signInWithEmail(email, password).catch((err) => authStatus(true));
         }
         else {
             await createUserWithEmail(email, password).then(() => {

@@ -30,7 +30,7 @@ const GameData = (props) => {
                 if (doesUserPickExistInCache(props.year, props.week, props.id)) setHomePick(getPickFromUserCache(props.year, props.week, props.id));
                 setData(gameData);
             }).catch((message) => {
-                console.log("fetch aborted in GameData");
+                return message;
             });
         } else {
             if (doesUserPickExistInCache(props.year, props.week, props.id)) setHomePick(getPickFromUserCache(props.year, props.week, props.id));

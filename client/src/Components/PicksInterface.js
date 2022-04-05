@@ -34,7 +34,7 @@ function PicksInterface() {
                         });
                     })
                     .catch((message) => {
-                        console.log("fetch aborted in PicksInterface: " + message);
+                        return message;
                     });
             } else if (getData(year, gameObject.week)[0] !== gameObject.games[0]) { //if state holds cache value from different week
                 setGameObject({

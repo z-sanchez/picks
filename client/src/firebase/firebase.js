@@ -43,15 +43,12 @@ export async function createUserWithEmail(email, password) {
 
 //sign in to firebase with demo credentials
 export async function signInWithEmail(email, password) {
-    console.log("sign in called");
     return signInWithEmailAndPassword(getAuth(), email, password);
 }
 
 export async function signOutApp() {
     try {
-        await signOut(getAuth()).then(() => {
-            console.log("signed out");
-        });
+        await signOut(getAuth());
     } catch (error) {
         console.log(error.message);
     }
@@ -90,7 +87,7 @@ async function addUserToGroup(user, group, groupName) {
 
     //adding user to group
     if (group.members.includes(user)) {
-        console.log("already in group");
+        alert("already in group");
         return; //if user already in group
     }
 
