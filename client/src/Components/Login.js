@@ -42,7 +42,7 @@ const Login = (props) => {
                 <div className="row justify-content-center align-content-lg-center w-100 h-100 content--background">
                     <div className="graphic__background col-lg-3 d-flex flex-lg-column justify-content-center justify-content-lg-start">
                         <img src={graphic}  id="footballGraphic" alt="football player graphic"/>
-                        <button className="buttons" onClick={() => {changeForm();}}>Sign Up</button>
+                        <button className="buttons mt-lg-auto" onClick={() => {changeForm();}}>Sign Up</button>
                     </div>
                     <form id="loginForm" className="col-lg-5 px-4 px-lg-5 d-flex flex-column justify-content-start">
                         <div id="loginStatus__header" className="d-flex align-items-center justify-content-between">
@@ -59,8 +59,8 @@ const Login = (props) => {
                         </label>
                         <input type="text" id="password"/>
                         <button className="buttons mt-5 mt-lg-auto" onClick={(e) => {e.preventDefault(); handleSubmit()}}>Login</button>
-                        <Footer/>
                     </form>
+                    <Footer/>
                 </div>
             </div>
         </div>

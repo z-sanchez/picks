@@ -135,7 +135,6 @@ h5 {
 }
 
 .buttons {
-  margin-top: auto;
   margin-bottom: 8vh;
   align-self: center;
   width: 12vw;
@@ -152,6 +151,7 @@ h5 {
   .graphic__background, #loginForm {
     border-radius: 0;
     min-height: 0;
+    box-shadow: none;
   }
 
   .graphic__background {
