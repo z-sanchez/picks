@@ -103,7 +103,7 @@ a {
 }
 
 #submitButton {
-  animation: fadein 5s;
+  animation: fadein 1.5s;
 }
 
 @keyframes fadein {

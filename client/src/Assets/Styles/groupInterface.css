@@ -65,7 +65,7 @@ h5 {
   }
 }
 .groupContainer {
-  animation: fadein 2s;
+  animation: fadein 1.5s;
   width: 80%;
 }
 
@@ -102,7 +102,7 @@ h5 {
   background-color: #FFFFFF;
   box-shadow: 0 3px 5px rgba(129, 129, 129, 0.47);
   border-radius: 1vh;
-  animation: fadein 3s;
+  animation: fadein 2s;
 }
 
 @keyframes fadein {
