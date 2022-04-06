@@ -59,6 +59,14 @@ h5 {
   color: #3B80FF;
 }
 
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 @media (max-width: 991.98px) {
   .headerNav__item {
     font-size: 3vw;
@@ -87,14 +95,6 @@ h5 {
   animation: fadein 2s;
 }
 
-@keyframes fadein {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
 @media (max-width: 991.98px) {
   .statBox {
     width: 80%;
