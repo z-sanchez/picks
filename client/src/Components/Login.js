@@ -12,7 +12,7 @@ const Login = (props) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (props.user != null) window.location.replace("https://angry-shockley-9e325c.netlify.app/"); //if no one is logged in
+        if (props.user != null) navigate('/app/picks'); //if no one is logged in
     });
 
     function changeForm() { //changes form state from login to sign in and back
