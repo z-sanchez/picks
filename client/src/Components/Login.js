@@ -21,7 +21,7 @@ const Login = (props) => {
     }
 
     async function handleSubmit() {
-        let email = document.getElementById("email").value;
+        let email = document.getElementById("email").value.toLowerCase();
         let password = document.getElementById("password").value;
 
         if (email == null || email === ""|| password == null || password === "") return;
