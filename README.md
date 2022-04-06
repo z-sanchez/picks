@@ -12,75 +12,68 @@ NFL Pick'em App
 2. [Tools, API's, and more](#tools)
 3. [Setup](#setup)
 4. [How it works](#howit)
-5. [What I learned](#learned)
-6. [What's to come?](#whattocome)
+5. [What's to come?](#whattocome)
 
 ## About <a name="whatitdoes"></a>
 This project is a kind of self assigned capstone project as well as tool to help with one of my family's long held tradition of competiting each NFL season in a Pick'em league (usually done on paper). 
 
-I threw everything I could at this project including React, API, caches, sass, async/await, database, user authentication, and animations. I feel the project came out well but will still need some work.
+I threw everything I could at this project including React, API, caches, sass, async/await, database, user authentication, React Router, React context, React hooks, and animations. I feel the project came out well but will still need some work.
+
+The result, an app that allows you to play a game predicting the winner of each week's games and compare them to others in the group you create or join, as well as viewing your stats over the season.
 
 ## Tools, API's, and more <a name="tools"></a>
 
 ### [NFL API endpoints from ESPN](https://gist.github.com/nntrn/ee26cb2a0716de0947a0a4e9a157bc1c#v2sportsfootballleaguesnflseasonsyeartypesseasontypeweeksweeknum)
-I used this 
+I used this API to fetch season, week, and game data with Axios. Due to being a quite nested API and a substantial amount of fetch calls required to display a lot of games, I had to implement a cache to reduce performance issues.
 
+### Caches
+I designed three caches to work in the app. One is the main cache which holds the gameIDs fetched from the api. The second is the gameCache which stores the game data collected. Finally, the userCache collects the user's picks. All three are referred to when filled instead of trying to go through the api or firebase.
+
+These are just basic data structures consisting of arrays and objects built in a fast and dirty fashion to get them up and running. They could benifit from being declared as classes instead of how the current code looks. 
+
+These caches empty when app is exited.
 
 ### Firebase
-During this project I spent a lot of time with the firebase documentation. I now how a feel for subscribing to api's, being organized about api calls,
-asynchronous tasks, and authentication. 
+During this project I spent a lot of time with the firebase documentation and have a better grasp on it. In this app, I use it for user authentication, storing user picks, user stats, and groups created.
 
-The main functions of firebase in this project are to authenticate a user, create collections with users id, add their id to a manifest, retrieve and store chat messages.
 
-The firestore for hermes is mainly composed of three different collection types: 
-- users (the manifest of all users on the app)
-- user (contains all of the users contacts)
-- chat (user and contacts chat messages)
+### React Router
+React Router was my new piece of technology for this project. I can't wait to use it more as it opens the ability to do a bit more with my React Projects.
 
-### SASS
-I also used SASS again and went through documentation. I was feeling good about it until I then realized I nested every style declaration.
-All my styling was out of sorts.
-
-I'll never make that mistake again.
-
-Others: React
+Others: React, Sass, Bootstrap
 
 ## Setup <a name="setup"></a>
 If you want to run the project yourself, clone the repository, go into client folder and run 
 <code>npm install</code> and then <code>npm start</code>
 
-You'll be greeted to a demo version of the app.
-
-On mobile, click the no contact to choose who to chat with. 
-
-Click logo to sign out.
+You'll be greeted to a demo version of the app. 
 
 ## How it works <a name="howit"></a>
-Currently, the code for logging in with a gmail account is taken out. This project is primarily for practice and I don't want your data. Instead, you'll be logged
-into a demo user with dummy credentials. Hit the logo to sign out!
 
-*The ChatApp* component is the main parent of all data and also displays messages. When mounted it grabs messages, sets a current contact, and grabs messages from the chat
-between user and that contact. The default is no contact selected.
+The data flow goes as follows: 
+App looks for user login status, once user logs in the app fills the userCache with user's data from firebase.
 
-*The ContactList* component has the job of displaying contacts, adding contacts, and passing on contact info to *Contact* component. On mobile devices,
-this has the be rendered differently due to a second list component being render in visible spot on the page. This happens because in mobile, the main list is cut off.
+The app then directs to picks screen with router and displays the current weeks games.
 
-*Contact*
-Function component that renders contacts. 
+The picksInterface component fetches data from API and stores it into cache and passes data as a prop to gameData component to display.
 
+For now, the current week is always 1 because there is no current NFL season.
 
-## What I learned <a name="learned"></a>
-- Don't nest styles in sass unless you mean to 
-- Try not to set height properties on elements. It makes responsiveness a pain.
-- Keep organized and write clean code now instead of later
-- Read documentation and write documentation
-- Firebase
-- I can host sites on netlify
-- React context
-- More familiar with React useState, useEffect
+Depending if the week's games have all ended, the results of each game will display or the user's picks will instead. Again, for now, every week is considered not over until user submits picks because the season is over.
+
+Once picks are submitted, firebase stores user's picks, the userCache calculates user's correct and wrong picks and stores the states in firebase. The picksInterface component will update all the info displayed.
+
+Other pages include stats page which simply grabs stats from firebase and does a few calculations before displaying stats.
+
+A groups page is also avaliable to view which gives the option to join a group. Once joined you can then see everyone in the group's scores and an option to see their profile.
+
+If user chooses to see another group members profile, a context belonging to a parent component updates to the group members name, every interface component then reads this update and displays the selected group member's picks or stats (never their groups) and an option to return to the actual user's views.
 
 
 ## What's to come <a name="whattocome"></a>
 - code refactoring
-- better css styling
-- deleting contacts
+- Visual redesigns
+- BUG: Refreshing page tries to reload page but netlify won't let the page reload to the correct address due to router complications
+- BUG: While viewing a group member's picks, returning to current user's picks does not display the current user's results if the currently viewed week has been ended
+- FEATURE: Show group winner of the week
+- FEATURE: Include a group win statistic
