@@ -1,5 +1,5 @@
 
-# HERMES
+# PICKS
 NFL Pick'em App
 
 ![Login Screen](/client/src/Assets/Images/picksPreview.png)
