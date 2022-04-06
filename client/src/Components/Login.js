@@ -12,10 +12,10 @@ const Login = (props) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (props.user != null) navigate('/app/picks');
+        if (props.user != null) window.location.replace("https://angry-shockley-9e325c.netlify.app/"); //if no one is logged in
     });
 
-    function changeForm() {
+    function changeForm() { //changes form state from login to sign in and back
         prepForm(!loggingIn);
         setLoggingIn(!loggingIn);
     }
@@ -30,8 +30,8 @@ const Login = (props) => {
             await signInWithEmail(email, password).catch((err) => authStatus(true));
         }
         else {
-            await createUserWithEmail(email, password).then(() => {
-                authStatus(false);
+            await createUserWithEmail(email, password).then(() => { //creates and then signs in
+                authStatus(false); //sets UI changes in the form
             }).catch((err) => {console.log(err); authStatus(true);});
         }
     }

@@ -17,7 +17,7 @@ function GroupsInterface() {
 
         getGroups();
 
-        return () => setGroups([]);
+        return () => setGroups([]); //cleans up async firestore functions
 
     }, [context.currentUser, context.user]);
 

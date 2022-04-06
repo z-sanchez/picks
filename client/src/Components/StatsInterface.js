@@ -12,7 +12,7 @@ function StatsInterface() {
 
     useEffect(() => {
         async function stats() {
-            setStatsObject(await getStats(context.user));
+            setStatsObject(await getStats(context.user)); 
         }
 
         if (statsObject === null) stats();

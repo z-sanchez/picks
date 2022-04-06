@@ -14,9 +14,9 @@ function App() {
     const [user, setUser] = useState(null);
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(getAuth(), (userResponse) => {
-            if (userResponse) {
-                setUserCache(getUserPicks(userResponse.email)).then(() => setUser(userResponse.email));
+        const unsubscribe = onAuthStateChanged(getAuth(), (userResponse) => { //firebase event listener for user's login state
+            if (userResponse) { //user logged in
+                setUserCache(getUserPicks(userResponse.email)).then(() => setUser(userResponse.email)); //get user's data from firestore and fill cache, then set state to name of user
             } else {
                 setUser(null);
             }

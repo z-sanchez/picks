@@ -14,7 +14,7 @@ const GameData = (props) => {
     const [pickHome, setHomePick] = useState(null);
 
 
-    function pickTeam(home) {
+    function pickTeam(home) { //home parameter: if true user picked home, if false user picked away
         updateUserCache(props.year, props.week, props.id, home);
         if (!home) setHomePick(false);
         else setHomePick(true);
@@ -22,18 +22,18 @@ const GameData = (props) => {
 
 
     async function getGameData(abortSignal) {
-        if (doesGameDataExist(props.year, props.week, props.id) === false) {
-            await getGameStats(props.id, abortSignal).then((gameData) => {
-                updateGameCache(props.year, props.week, props.id, gameData);
+        if (doesGameDataExist(props.year, props.week, props.id) === false) { //if game data does not exist in cache
+            await getGameStats(props.id, abortSignal).then((gameData) => { //refer to API
+                updateGameCache(props.year, props.week, props.id, gameData); //update gameCache with data
                 return gameData
             }).then((gameData) => {
-                if (doesUserPickExistInCache(props.year, props.week, props.id)) setHomePick(getPickFromUserCache(props.year, props.week, props.id));
+                if (doesUserPickExistInCache(props.year, props.week, props.id)) setHomePick(getPickFromUserCache(props.year, props.week, props.id)); //checks if user's pick exist in userCache
                 setData(gameData);
             }).catch((message) => {
                 return message;
             });
-        } else {
-            if (doesUserPickExistInCache(props.year, props.week, props.id)) setHomePick(getPickFromUserCache(props.year, props.week, props.id));
+        } else { //game data exist in cache
+            if (doesUserPickExistInCache(props.year, props.week, props.id)) setHomePick(getPickFromUserCache(props.year, props.week, props.id)); //checks if user's pick exist in userCache
             setData(getGameDataFromCache(props.year, props.week, props.id));
         }
     }
@@ -46,7 +46,7 @@ const GameData = (props) => {
             getGameData(gameController.signal);
         }
 
-        function cleanUp() {
+        function cleanUp() { //when component unmounts, it's fetch calls are ended. Helps for when user rapidly skips to a week
             gameController.abort();
         }
 
@@ -56,14 +56,14 @@ const GameData = (props) => {
 
     let display = null;
 
-    if (data !== null) {
+    if (data !== null) { //if component has retrieved game data
         let awayName = getTeamName(data, false), homeName = getTeamName(data, true),
             awayRecord = getTeamRecord(data, false), homeRecord = getTeamRecord(data, true),
             gameTime = getGameTime(data), gameLink = getGameLink(data), awayClass = 'game__away',
             homeClass = 'game__home', homeScore = getTeamScore(data, true), awayScore = getTeamScore(data, false),
             homeWinner = homeScore > awayScore;
 
-        if (pickHome != null) {
+        if (pickHome != null) { //adjustments for UI when team has been picked
             if (pickHome === true) {
                 homeClass = homeClass + " pick";
                 if (props.end) awayClass = awayClass + " noPick";
@@ -73,7 +73,7 @@ const GameData = (props) => {
             }
         }
 
-        if (props.end) {
+        if (props.end) { //UI changes to show results
             awayRecord = awayScore;
             homeRecord = homeScore;
             if (homeWinner && pickHome) homeClass = homeClass + " winner";
@@ -82,7 +82,7 @@ const GameData = (props) => {
             else if (!homeWinner && pickHome) homeClass = homeClass + " loser";
         }
 
-        if (context.user !== context.currentUser) {
+        if (context.user !== context.currentUser) { //when viewing other's picks, games do not highlight like they're being picked
             awayClass = awayClass + " noPick";
             homeClass = homeClass + " noPick";
         }

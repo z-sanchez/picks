@@ -1,3 +1,6 @@
+//NOTE: I should probably make this cache into a class. Using an instance of the cache class would be easier to control
+//inside React Components.
+
 //example data structure for
 // userCache = [
 //  {
@@ -29,11 +32,11 @@ export function doesUserPickExistInCache(year, week, gameID) {
     const findGame = (object) => object.gameID === gameID;
 
     if (userCache.filter(object => object.year === year).length > 0) { //if year exist in cache
-        let yearArray = userCache[userCache.findIndex(findYear)].array; //get array
-        if (yearArray.filter(object => object.week === week).length > 0) {
-            let weekGames = yearArray[yearArray.findIndex(findWeek)].games;
-            if (weekGames.filter(object => object.gameID === gameID).length > 0) {
-                let gamePick = weekGames[weekGames.findIndex(findGame)].homePick;
+        let yearArray = userCache[userCache.findIndex(findYear)].array; //get year array
+        if (yearArray.filter(object => object.week === week).length > 0) { //if week array exist in year
+            let weekGames = yearArray[yearArray.findIndex(findWeek)].games; //get week array
+            if (weekGames.filter(object => object.gameID === gameID).length > 0) { //if game exist in week array
+                let gamePick = weekGames[weekGames.findIndex(findGame)].homePick; //grab pick
                 return gamePick !== null;
             } else {
                 return false;
@@ -54,7 +57,7 @@ export function getPickFromUserCache(year, week, gameID) {
 
     let game = userCache[userCache.findIndex(findYear)].array;
     game = game[game.findIndex(findWeek)].games;
-    return game[game.findIndex(findGame)].homePick;
+    return game[game.findIndex(findGame)].homePick; //return pick according to parameters
 }
 
 //adds pick to userCache
@@ -67,17 +70,17 @@ export function updateUserCache(year, week, gameID, pick) {
     if (userCache.filter(object => object.year === year).length > 0) { //if year exist in cache
         let yearArray = userCache[userCache.findIndex(findYear)].array; //get year array
         if (yearArray.filter(object => object.week === week).length > 0) { //if week exist
-            let weekGames = yearArray[yearArray.findIndex(findWeek)].games;
-            if (weekGames.filter(object => object.gameID === gameID).length > 0) { //checks if game has had previous pick
-                weekGames[weekGames.findIndex(findGame)].homePick = pick; //overwrites pick
-            } else {
-                weekGames.push({gameID: gameID, homePick: pick});
+            let weekGames = yearArray[yearArray.findIndex(findWeek)].games; //get week array
+            if (weekGames.filter(object => object.gameID === gameID).length > 0) { //checks game exist in week array
+                weekGames[weekGames.findIndex(findGame)].homePick = pick; //writes pick
+            } else { //game does not exist in week array
+                weekGames.push({gameID: gameID, homePick: pick}); //push game into userCache
             }
-        } else {
-            yearArray.push({week: week, games: [{gameID: gameID, homePick: pick}]});
+        } else { //week does not exist in year array
+            yearArray.push({week: week, games: [{gameID: gameID, homePick: pick}]}); //push week into userCache
         }
     } else { //year doesn't exist in cache
-        userCache.push({year: year, array: [{week: week, games: [{gameID: gameID, homePick: pick}]}]});
+        userCache.push({year: year, array: [{week: week, games: [{gameID: gameID, homePick: pick}]}]}); //push year into userCache
     }
 }
 
@@ -88,7 +91,7 @@ export function validPicks(year, week, games) {
     let gameArray = userCache[userCache.findIndex(findYear)].array;
     gameArray = gameArray[gameArray.findIndex(findWeek)].games;
 
-    return gameArray.length === games.length;
+    return gameArray.length === games.length; //checks if every game has been picked before submitting
 }
 
 //loads user data from database into cache
@@ -96,9 +99,7 @@ export async function setUserCache(cache) {
     userCache = await cache;
 }
 
-//returns userCache to database and marks it being submitted to database. Only happens when picks are made has happened
-//submitted is useless for demo purposes because end of the week occurs and pick submissions are done together
-//real use, these operations would happen separately one when picks are submitted and another when actually time passes
+//called by function in firebase.js for when picks are submitted to firestore, cache marks week submitted before returning it
 export function getUserCache(year, week) {
     const findYear = (object) => object.year === year;
     const findWeek = (object) => object.week === week;
@@ -108,8 +109,7 @@ export function getUserCache(year, week) {
 }
 
 
-//checks if week is data is complete meaning both picks and end of week conditions have been met. This sets state to display results
-//might try to implement try and catch for other methods searching for object properties
+//checks if week is data is complete. For demo, this is when picks have been submitted. For live site, this means date of last game has passed
 export function isWeekFinished(year, week) {
     const findYear = (object) => object.year === year;
     const findWeek = (object) => object.week === week;
@@ -123,29 +123,25 @@ export function isWeekFinished(year, week) {
 
 
 //finishes week and marks week ready for displaying results
-//add endOfWeek and score property to object
 export function endWeek(year, week) {
     const findYear = (object) => object.year === year;
     const findWeek = (object) => object.week === week;
     let weekArray = userCache[userCache.findIndex(findYear)].array;
-    //all picks submitted before calculating check
     weekArray[weekArray.findIndex(findWeek)].score = calculateUserScore(year, week);
     weekArray[weekArray.findIndex(findWeek)].endOfWeek = true;
 }
 
 
-//calc score
-//if week finished, check for first game if winner is null bail. No need to calculate while week is still going.
-//check if score is recorded, if so return it
-//else run through data and add wins for every correct guess and losses for every other
-//add result to object and return
+//calculates how many wins and losses user has for the week after submitting picks
 export function calculateUserScore(year, week) {
     let wins = 0, losses = 0;
     const findYear = (object) => object.year === year;
     const findWeek = (object) => object.week === week;
 
-    if (!isWeekFinished(year, week)) {
+    if (!isWeekFinished(year, week)) { //if week is over, calculate
         let gameCache = getGameCache();
+
+        //locate week in game cache
         let weekArray = gameCache[gameCache.findIndex(findYear)].array;
         weekArray = weekArray[weekArray.findIndex(findWeek)];
         let weekGames = weekArray.games;
@@ -171,6 +167,7 @@ export function calculateUserScore(year, week) {
     }
 }
 
+//returns score user has according to parameters
 export function getScoreFromUserCache(year, week) {
     const findYear = (object) => object.year === year;
     const findWeek = (object) => object.week === week;

@@ -12,22 +12,19 @@ import {endWeek} from "../firebase/userCache";
 function PicksInterface() {
 
     const context = useContext(userContext);
-    const [user, setUser] = useState(context.user);
+    const [user, setUser] = useState(context.user); //PicksInterface will display the data of the user here
     const [year, setYear] = useState(2021);
-    const [gameObject, setGameObject] = useState({games: [], endOfWeek: false, week: 1});
+    const [gameObject, setGameObject] = useState({games: [], endOfWeek: false, week: 1}); //games holds gameIDs, endOfWeek tells component to display results of picks
 
 
     useEffect(() => {
-        if (user !== context.user) {
-            setUser(context.user);
-        }
 
         async function fetchGames() {
-            if (doesExist(year, gameObject.week) === false) {
-                await findWeeksGames(gameObject.week, year)
+            if (doesExist(year, gameObject.week) === false) { //check if games are in cache
+                await findWeeksGames(gameObject.week, year) //if not, refer to api
                     .then((gamesFound) => {
-                        updateCache(year, gameObject.week, gamesFound);
-                        setGameObject({
+                        updateCache(year, gameObject.week, gamesFound); //load ids into cache
+                        setGameObject({ //change state appropriately
                             games: gamesFound,
                             endOfWeek: isWeekFinished(year, gameObject.week),
                             week: gameObject.week
@@ -36,7 +33,7 @@ function PicksInterface() {
                     .catch((message) => {
                         return message;
                     });
-            } else if (getData(year, gameObject.week)[0] !== gameObject.games[0]) { //if state holds cache value from different week
+            } else { //grab data from cache
                 setGameObject({
                     games: getData(year, gameObject.week),
                     endOfWeek: isWeekFinished(year, gameObject.week),
@@ -47,7 +44,7 @@ function PicksInterface() {
 
         fetchGames();
 
-    }, [user, context.user, year, gameObject.week, gameObject.games]);
+    }, [year, gameObject.week, gameObject.games]);
 
 
     function updateWeek(forward) {
@@ -66,24 +63,24 @@ function PicksInterface() {
             alert("Missing picks");
             return
         }
-        endWeek(year, gameObject.week); //this should be moved after demo. This method is responsible for ending entire week in real time
-        submitUserPicks(context.user, year, gameObject.week);
+        endWeek(year, gameObject.week); //this should be moved after demo. This method is responsible for ending entire week as soon as called. Component will show results
+        submitUserPicks(context.user, year, gameObject.week); //sends picks to firestore
         setGameObject({games: gameObject.games, endOfWeek: true, week: gameObject.week});
-        advanceWeekPrompt();
+        advanceWeekPrompt(); //prompt explaining immediate results
     }
 
     function renderGames() {
         let submitButton = (
             <button key={uniqid()} className="buttons mx-2 mb-5 mx-lg-5" id="submitButton" onClick={handleSubmit}>Submit
                 Picks</button>);
-        if (gameObject.endOfWeek || context.user !== context.currentUser) submitButton = null;
+        if (gameObject.endOfWeek || context.user !== context.currentUser) submitButton = null; //buttons doesn't show if week hasn't ended, and if user is viewing another users picks
 
-        if (gameObject.games.length !== 0) {
-            return [gameObject.games.map((game) => {
-                return <GameData id={game} week={gameObject.week} year={year} end={gameObject.endOfWeek}
-                                 key={uniqid()}/>
-            }), submitButton];
-        } else return null;
+
+        return [gameObject.games.map((game) => { //renders gameDate component for every gameID in state
+            return <GameData id={game} week={gameObject.week} year={year} end={gameObject.endOfWeek}
+                             key={uniqid()}/>
+        }), submitButton];
+
     }
 
 
@@ -93,7 +90,7 @@ function PicksInterface() {
 
     let backToMainUser = null;
     if (context.user !== context.currentUser) backToMainUser = (<p className="headerNav__item" onClick={() => {
-        context.updateUser(context.currentUser)
+        context.updateUser(context.currentUser) //changes view back to user's view instead of others data
     }}>Back to Main User</p>);
 
 

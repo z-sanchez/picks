@@ -1,3 +1,5 @@
+//home parameter is a bool. false means function should return data of the away team and true means home team
+
 export function getTeamName(data, home) {
     let index = 0;
     if (!home) index = 1;
@@ -34,9 +36,8 @@ export function getTeamScore(data, home) {
     return parseInt(score);
 }
 
-export function getGameTime(data) {
+export function getGameTime(data) { //receives gameID
     const date = new Date(data.date);
-
 
 
     let hours = date.getHours();
@@ -45,7 +46,6 @@ export function getGameTime(data) {
     hours = hours % 12;
     hours = hours ? hours : 12;
     minutes = minutes < 10 ? '0'+minutes : minutes;
-
 
 
     return date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear() + " " + hours + ":" + minutes + meridian;

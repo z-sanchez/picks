@@ -41,10 +41,11 @@ export async function createUserWithEmail(email, password) {
     });
 }
 
-//sign in to firebase with demo credentials
+
 export async function signInWithEmail(email, password) {
     return signInWithEmailAndPassword(getAuth(), email, password);
 }
+
 
 export async function signOutApp() {
     try {
@@ -53,6 +54,7 @@ export async function signOutApp() {
         console.log(error.message);
     }
 }
+
 
 export async function getUserPicks(username) {
     const database = getFirestore(firebase);
@@ -82,6 +84,7 @@ function createGroup(groupName) {
 
     setDoc(groupsRef, userDoc);
 }
+
 
 async function addUserToGroup(user, group, groupName) {
 
@@ -123,6 +126,7 @@ export async function addGroup(groupName, user) {
         await addGroup(groupName, user);
     }
 }
+
 
 export async function getUsersGroups(user) {
     const database = getFirestore(firebase);
