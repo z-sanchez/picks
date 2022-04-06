@@ -69,17 +69,22 @@ function PicksInterface() {
         advanceWeekPrompt(); //prompt explaining immediate results
     }
 
-    function renderGames() {
+    function submitButton() {
         let submitButton = (
-            <button key={uniqid()} className="buttons mx-2 mb-5 mx-lg-5" id="submitButton" onClick={handleSubmit}>Submit
+            <button key={uniqid()} className="buttons mx-2 mt-5 mx-lg-5" id="submitButton"
+                    onClick={handleSubmit}>Submit
                 Picks</button>);
         if (gameObject.endOfWeek || context.user !== context.currentUser) submitButton = null; //buttons doesn't show if week hasn't ended, and if user is viewing another users picks
+        return submitButton;
+    }
 
+    function renderGames() {
+        let lastElement = gameObject.games.length - 1;
 
-        return [gameObject.games.map((game) => { //renders gameDate component for every gameID in state
+        return gameObject.games.map((game, index) => { //renders gameDate component for every gameID in state
             return <GameData id={game} week={gameObject.week} year={year} end={gameObject.endOfWeek}
-                             key={uniqid()}/>
-        }), submitButton];
+                         last={index === lastElement} makeButton={submitButton} key={uniqid()}/>
+        });
 
     }
 

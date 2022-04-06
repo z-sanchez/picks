@@ -87,11 +87,14 @@ export function updateUserCache(year, week, gameID, pick) {
 export function validPicks(year, week, games) {
     const findYear = (object) => object.year === year;
     const findWeek = (object) => object.week === week;
+    try {
+        let gameArray = userCache[userCache.findIndex(findYear)].array;
+        gameArray = gameArray[gameArray.findIndex(findWeek)].games;
 
-    let gameArray = userCache[userCache.findIndex(findYear)].array;
-    gameArray = gameArray[gameArray.findIndex(findWeek)].games;
-
-    return gameArray.length === games.length; //checks if every game has been picked before submitting
+        return gameArray.length === games.length; //checks if every game has been picked before submitting
+    } catch (err) {
+        return false
+    }
 }
 
 //loads user data from database into cache

@@ -87,6 +87,9 @@ const GameData = (props) => {
             homeClass = homeClass + " noPick";
         }
 
+        let submitButton = null;
+        if (props.last) submitButton = props.makeButton();
+
         display = (
             <div className="game my-5 d-flex flex-column">
                 <div className={awayClass + " mb-3 d-flex flex-column align-items-center justify-content-center"}
@@ -106,6 +109,7 @@ const GameData = (props) => {
                     <h1>{homeName}</h1>
                     <p className="align-self-end">{homeRecord}</p>
                 </div>
+                {submitButton}
             </div>
         );
     }
