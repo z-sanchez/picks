@@ -16,12 +16,16 @@ NFL Pick'em App
 6. [What's to come?](#whattocome)
 
 ## About <a name="whatitdoes"></a>
-After several back to back small React projects, I wanted to do something out of my comfort zone.
-I saw some chat app ideas on youtube and gave it my shot. 
+This project is a kind of self assigned capstone project as well as tool to help with one of my family's long held tradition of competiting each NFL season in a Pick'em league (usually done on paper). 
 
-This project was benificial to my learning of in depth react and javascript. I also got to play around with Google's Firebase.
+I threw everything I could at this project including React, API, caches, sass, async/await, database, user authentication, and animations. I feel the project came out well but will still need some work.
 
 ## Tools, API's, and more <a name="tools"></a>
+
+### [NFL API endpoints from ESPN](https://gist.github.com/nntrn/ee26cb2a0716de0947a0a4e9a157bc1c#v2sportsfootballleaguesnflseasonsyeartypesseasontypeweeksweeknum)
+I used this 
+
+
 ### Firebase
 During this project I spent a lot of time with the firebase documentation. I now how a feel for subscribing to api's, being organized about api calls,
 asynchronous tasks, and authentication. 
